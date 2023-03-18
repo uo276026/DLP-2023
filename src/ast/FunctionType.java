@@ -1,0 +1,40 @@
+package ast;
+
+import visitor.Visitor;
+
+import java.util.List;
+
+public class FunctionType implements Type{
+
+    public Type returnType;
+    public List<VariableDefinition> vars; //parametros
+
+    public int line, column;
+
+    public FunctionType(Type returnType, List<VariableDefinition> vars){
+        this.returnType=returnType;
+        this.vars=vars;
+    }
+
+    public FunctionType(int line, int column, Type returnType, List<VariableDefinition> vars){
+        this.line=line;
+        this.column=column;
+        this.returnType=returnType;
+        this.vars=vars;
+    }
+
+    @Override
+    public int getLine() {
+        return line;
+    }
+
+    @Override
+    public int getColumn() {
+        return column;
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> v, TP p) {
+        return v.visit(this,p);
+    }
+}

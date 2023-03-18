@@ -1,0 +1,6 @@
+def main(): {
+    if 2>5:{
+      	print 't';
+      	}
+
+}
