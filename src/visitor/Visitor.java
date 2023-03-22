@@ -22,31 +22,18 @@ public interface Visitor<TP,TR> {
     TR visit(DoubleType doubleType, TP p);
     TR visit(ErrorType errorType, TP p);
     TR visit(FunctionDefinition functionDefinition, TP p);
-
     TR visit(FunctionInvocation functionInvocation, TP p);
-
     TR visit(FunctionType functionType, TP p);
-
     TR visit(Input input, TP p);
-
     TR visit(IntType intType, TP p);
-
     TR visit(IntLiteral intLiteral, TP p);
-
     TR visit(UnaryMinus unaryMinus, TP p);
-
     TR visit(UnaryNot unaryNot, TP p);
-
     TR visit(VoidType voidType, TP p);
-
     TR visit(Iterative iterative, TP p);
-
     TR visit(Logical logical, TP p);
-
     TR visit(Print print, TP p);
-
     TR visit(Return aReturn, TP p);
-
     TR visit(StructType structType, TP p);
 
 

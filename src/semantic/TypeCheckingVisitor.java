@@ -5,9 +5,6 @@ import visitor.Visitor;
 
 public class TypeCheckingVisitor implements Visitor {
 
-    //Idenxing ?
-    //tipos y en 5/7 statements SOLO RECORRER
-
     /*3 preguntas:
         - ¿Hay que calcular algo, el nuevo atributo?
         - ¿Hay que recorrer, es decir hay que entrar en sus hijos y recorrerlos?
@@ -35,16 +32,24 @@ public class TypeCheckingVisitor implements Visitor {
         return null;
     }
 
-    //Igual que la asignacion, comprobar que derecho es lvalue???
+    //Igual que la asignacion, comprobar que la expression es lvalue
     @Override
     public Void visit(Input a, Object p) {
         a.expression.accept(this,p);
+        if(!a.expression.getLValue()){
+            ErrorType et = new ErrorType(a.expression.getLine(), a.expression.getColumn(),
+                    "ERROR in line " + a.expression.getLine() + ": Wrong type at Input");
+        }
         return null;
     }
 
     @Override
-    public Void visit(Print print, Object p) {
-        print.expression.accept(this,p);
+    public Void visit(Print a, Object p) {
+        a.expression.accept(this,p);
+        if(!a.expression.getLValue()){
+            ErrorType et = new ErrorType(a.expression.getLine(), a.expression.getColumn(),
+                    "ERROR in line " + a.expression.getLine() + ": Wrong type at Print");
+        }
         return null;
     }
 
@@ -174,7 +179,7 @@ public class TypeCheckingVisitor implements Visitor {
     @Override
     public Void visit(FunctionType functionType, Object p) {
         functionType.returnType.accept(this,p);
-        for(VariableDefinition s: functionType.vars)
+        for(VariableDefinition s: functionType.parametros)
             s.accept(this,p);
 
         return null;

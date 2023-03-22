@@ -7,20 +7,20 @@ import java.util.List;
 public class FunctionType implements Type{
 
     public Type returnType;
-    public List<VariableDefinition> vars; //parametros
+    public List<VariableDefinition> parametros; //parametros
 
     public int line, column;
 
     public FunctionType(Type returnType, List<VariableDefinition> vars){
         this.returnType=returnType;
-        this.vars=vars;
+        this.parametros=vars;
     }
 
     public FunctionType(int line, int column, Type returnType, List<VariableDefinition> vars){
         this.line=line;
         this.column=column;
         this.returnType=returnType;
-        this.vars=vars;
+        this.parametros=vars;
     }
 
     @Override

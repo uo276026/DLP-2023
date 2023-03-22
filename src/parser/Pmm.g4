@@ -25,6 +25,9 @@ main returns [Definition ast, List<Statement> statements = new ArrayList<Stateme
                  catch(NullPointerException e){} } )*
             (statement { try { for(int i = 0; i < $statement.ast.size(); i++)
             { $statements.add($statement.ast.get(i));}} catch(NullPointerException e){} } )* '}'
+            { $ast= new FunctionDefinition($statements.get(0).getLine(), $statements.get(0).getColumn(), "main", $statements,
+                     new FunctionType($statements.get(0).getLine(), $statements.get(0).getColumn(),
+                     new VoidType(), new ArrayList<VariableDefinition>())); }
     ;
 
 definition returns [List<Definition> ast = new ArrayList<Definition>(), List<Statement> statements = new ArrayList<Statement>()]:
