@@ -9,6 +9,7 @@ public class FunctionDefinition extends AbstractExpression implements Definition
     public List<Statement> statements;
     public FunctionType tipo;
     public String name;
+    public int scope;
 
     public int line;
     public int column;
@@ -36,9 +37,23 @@ public class FunctionDefinition extends AbstractExpression implements Definition
         return tipo;
     }
 
+    public FunctionType getFunctionType(){
+        return tipo;
+    }
+
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public int getScope() {
+        return scope;
+    }
+
+    @Override
+    public void setScope(int scope) {
+        this.scope=scope;
     }
 
     @Override

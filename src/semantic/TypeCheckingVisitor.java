@@ -1,9 +1,10 @@
 package semantic;
 
 import ast.*;
+import visitor.AbstractVisitor;
 import visitor.Visitor;
 
-public class TypeCheckingVisitor implements Visitor {
+public class TypeCheckingVisitor extends AbstractVisitor {
 
     /*3 preguntas:
         - ¿Hay que calcular algo, el nuevo atributo?
@@ -44,16 +45,6 @@ public class TypeCheckingVisitor implements Visitor {
     }
 
     @Override
-    public Void visit(Print a, Object p) {
-        a.expression.accept(this,p);
-        if(!a.expression.getLValue()){
-            ErrorType et = new ErrorType(a.expression.getLine(), a.expression.getColumn(),
-                    "ERROR in line " + a.expression.getLine() + ": Wrong type at Print");
-        }
-        return null;
-    }
-
-    @Override
     public Void visit(Variable v, Object p) {
         v.setLValue(true);
         return null;
@@ -83,31 +74,6 @@ public class TypeCheckingVisitor implements Visitor {
     }
 
     @Override
-    public Void visit(Program program, Object p) {
-        for(Definition d: program.defs)
-            d.accept(this, p);
-        return null;
-    }
-
-    @Override
-    public Void visit(StructField structField, Object p) {
-        structField.type.accept(this,p);
-        return null;
-    }
-
-    @Override
-    public Void visit(ArrayType arrayType, Object p) {
-        arrayType.type.accept(this, p);
-        return null;
-    }
-
-    @Override
-    public Void visit(VariableDefinition variableDefinition, Object p) {
-        variableDefinition.type.accept(this, p);
-        return null;
-    }
-
-    @Override
     public Void visit(Cast cast, Object p) {
         cast.type.accept(this,p);
         cast.expression.accept(this,p);
@@ -122,11 +88,6 @@ public class TypeCheckingVisitor implements Visitor {
     }
 
     @Override
-    public Void visit(CharType charType, Object p) {
-        return null;
-    }
-
-    @Override
     public Void visit(Comparison c, Object p) {
         c.expression1.accept(this,p);
         c.expression2.accept(this,p);
@@ -135,26 +96,8 @@ public class TypeCheckingVisitor implements Visitor {
     }
 
     @Override
-    public Void visit(Conditional c, Object p) {
-        c.expression.accept(this,p);
-        for(Statement s: c.whileBody)
-            s.accept(this,p);
-        return null;
-    }
-
-    @Override
     public Void visit(DoubleLiteral doubleLiteral, Object p) {
         doubleLiteral.setLValue(false);
-        return null;
-    }
-
-    @Override
-    public Void visit(DoubleType doubleType, Object p) {
-        return null;
-    }
-
-    @Override
-    public Void visit(ErrorType errorType, Object p) {
         return null;
     }
 
@@ -172,26 +115,9 @@ public class TypeCheckingVisitor implements Visitor {
         f.defName.accept(this,p);
         for(Expression s: f.expressions)
             s.accept(this,p);
-        f.setLValue(false);
+        f.setLValue(true);
         return null;
     }
-
-    @Override
-    public Void visit(FunctionType functionType, Object p) {
-        functionType.returnType.accept(this,p);
-        for(VariableDefinition s: functionType.parametros)
-            s.accept(this,p);
-
-        return null;
-    }
-
-
-
-    @Override
-    public Void visit(IntType intType, Object p) {
-        return null;
-    }
-
 
 
     @Override
@@ -209,21 +135,6 @@ public class TypeCheckingVisitor implements Visitor {
     }
 
     @Override
-    public Void visit(VoidType voidType, Object p) {
-        return null;
-    }
-
-    @Override
-    public Void visit(Iterative c, Object p) {
-        c.expression.accept(this,p);
-        for(Statement s: c.ifBody)
-            s.accept(this,p);
-        for(Statement s: c.elseBody)
-            s.accept(this,p);
-        return null;
-    }
-
-    @Override
     public Void visit(Logical logical, Object p) {
         logical.expression1.accept(this,p);
         logical.expression2.accept(this,p);
@@ -231,19 +142,5 @@ public class TypeCheckingVisitor implements Visitor {
         return null;
     }
 
-
-
-    @Override
-    public Void visit(Return r, Object p) {
-        r.expression.accept(this,p);
-        return null;
-    }
-
-    @Override
-    public Void visit(StructType structType, Object p) {
-        for(StructField sf:structType.fields)
-            sf.accept(this,p);
-        return null;
-    }
 
 }

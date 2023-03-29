@@ -8,6 +8,7 @@ public class VariableDefinition implements Definition, Statement{
     public int column;
     public Type type;
     public String name;
+    public int scope;
 
     public VariableDefinition(int line, int column, Type type, String name){
         this.line=line;
@@ -39,5 +40,15 @@ public class VariableDefinition implements Definition, Statement{
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public int getScope() {
+        return scope;
+    }
+
+    @Override
+    public void setScope(int scope) {
+        this.scope=scope;
     }
 }

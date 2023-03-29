@@ -6,6 +6,7 @@ public class Variable extends AbstractExpression implements Expression{
     public String name;
     public int line, column;
     public boolean lvalue;
+    public Definition def;
 
     public Variable(int line, int column, String name) {
         this.line=line;

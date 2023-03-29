@@ -73,7 +73,7 @@ expression returns [Expression ast]:
     | ID            { $ast = new Variable( $ID.getLine(), $ID.getCharPositionInLine()+1, $ID.text ); }
     | ex1=expression '[' ex2=expression']' /*acceso a array*/
             { $ast = new ArrayAccess( $ex1.ast.getLine(), $ex1.ast.getColumn(), $ex2.ast, $ex1.ast ); }
-    | ID '.' ex=expression /*Acesso a struct*/ { $ast = new StructAccess($ID.getLine(), $ID.getCharPositionInLine()+1, $ID.text, $ex.ast ); }
+    | ex=expression '.' ID  /*Acesso a struct*/ { $ast = new StructAccess($ID.getLine(), $ID.getCharPositionInLine()+1, $ID.text, $ex.ast ); }
     | ('('tipo')') expression /*CAST*/ { $ast = new Cast( $expression.ast.getLine(), $expression.ast.getColumn(), $tipo.ast, $expression.ast ); }
     | '-' expression  { $ast = new UnaryMinus($expression.ast.getLine(), $expression.ast.getColumn(), $expression.ast); }
     | '!' expression { $ast = new UnaryNot( $expression.ast.getLine(), $expression.ast.getColumn(), $expression.ast ); }

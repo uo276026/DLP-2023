@@ -33,6 +33,14 @@ public class FunctionType implements Type{
         return column;
     }
 
+    public List<VariableDefinition> getParametros(){
+        return parametros;
+    }
+
+    public Type getReturnType(){
+        return returnType;
+    }
+
     @Override
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP p) {
         return v.visit(this,p);
