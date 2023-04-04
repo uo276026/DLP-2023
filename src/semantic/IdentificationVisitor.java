@@ -1,7 +1,10 @@
 package semantic;
 import ast.*;
+import ast.Expression.Variable;
+import ast.Statement.Statement;
 import visitor.AbstractVisitor;
 import symboltable.SymbolTable;
+import ast.Type.*;
 
 public class IdentificationVisitor extends AbstractVisitor {
 

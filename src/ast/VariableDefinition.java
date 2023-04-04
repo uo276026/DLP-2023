@@ -1,8 +1,10 @@
 package ast;
 
+import ast.Statement.Statement;
+import ast.Type.Type;
 import visitor.Visitor;
 
-public class VariableDefinition implements Definition, Statement{
+public class VariableDefinition implements Definition, Statement {
 
     public int line;
     public int column;

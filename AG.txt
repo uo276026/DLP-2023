@@ -1,0 +1,46 @@
+
+G = (1) IntLiteral: exp -> IntConstant
+	(2) CharLiteral: exp -> CharConstant
+	(3) DoubleLiteral: exp -> DoubleConstant
+	(4) Variable: exp -> ID
+	(5) ArrayAccess: exp1 -> exp2 exp3
+	(6) Arithmetic: exp1 -> ex2 (+/-/*//) exp3
+	(7) FunctionInvocation: exp1 -> exp2 exp3*
+	(8) Conditional: exp1 -> exp2 exp3*
+	(9) UnaryMinus: exp1 -> exp2
+	(10) Comparison: exp1 -> exp2 (>/</>=/<=) exp3
+    (11) Logical: exp1 -> exp2 (&&/||) exp3
+    (12) UnaryNot: exp1 -> exp2
+    (13) Assignment: stmt -> exp1 exp2
+    (14) Iterative: exp1 -> exp2 exp3* exp4*
+    (15) FunctionDefinition: exp1 -> exp2 ID exp3*
+    (16) Cast: exp1 -> exp2 exp3
+    (17) StructAccess: exp1 -> exp2
+
+A = {exp.type} <- Type
+
+R = (1) exp.type = new IntType();
+	(2) exp.type = new CharType();
+	(3) exp.type = new  DoubleType();
+	(4) exp.type = exp.definition.type;
+	(5) exp1.type = exp2.type.squareBrackets(exp3.type);
+	(6) exp1.type = exp2.type.arithmetic(exp3.type);
+	(7) exp1.type = exp2.type.parenthesis(exp3*.stream.map(exp -> exp.type).toList);
+	(8) exp1.type = exp2.type.asLogical();
+	(9) exp1.type = exp2.type.Arithmetic();
+	(10) exp1.type = exp2.type.Comparison(exp3.type);
+	(11) exp1.type = exp2.type.Logic(exp3.type);
+	(12) exp1.type = exp2.Logic();
+	(13) exp1.type = exp2.type.MustPromoteTo(exp1.type);
+	(14) exp1.type = exp2.type.asLogical();
+    (15) exp1.type = exp2.type.BuiltInType();
+    (16) exp1.type = exp2.type.canBeCastTo(exp3.type);
+    (17) exp1.type = exp2.type.dot(     );
+
+
+
+
+
+
+
+

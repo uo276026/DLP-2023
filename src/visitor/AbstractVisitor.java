@@ -1,8 +1,11 @@
 package visitor;
 
 import ast.*;
+import ast.Expression.*;
+import ast.Type.*;
+import ast.Statement.*;
 
-public class AbstractVisitor implements Visitor{
+public abstract class AbstractVisitor implements Visitor{
 
     @Override
     public Void visit(Arithmetic a, Object p) {

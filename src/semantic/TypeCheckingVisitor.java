@@ -1,8 +1,10 @@
 package semantic;
 
 import ast.*;
+import ast.Expression.*;
+import ast.Type.*;
 import visitor.AbstractVisitor;
-import visitor.Visitor;
+import ast.Statement.*;
 
 public class TypeCheckingVisitor extends AbstractVisitor {
 

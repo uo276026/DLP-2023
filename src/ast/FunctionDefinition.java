@@ -1,10 +1,13 @@
 package ast;
 
+import ast.Type.*;
+import ast.Statement.*;
+import ast.Expression.*;
 import visitor.Visitor;
 
 import java.util.List;
 
-public class FunctionDefinition extends AbstractExpression implements Definition, Expression{
+public class FunctionDefinition extends AbstractExpression implements Definition, Expression {
 
     public List<Statement> statements;
     public FunctionType tipo;

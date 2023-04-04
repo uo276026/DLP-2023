@@ -4,6 +4,9 @@ package parser;
  /* TODO LO QUE PONGAIS AQUI SE COPIA EN LA CLASE pmmPARSER */
     import ast.*;
     import java.util.*;
+    import ast.Type.*;
+    import ast.Statement.*;
+    import ast.Expression.*;
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
