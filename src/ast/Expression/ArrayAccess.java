@@ -6,13 +6,13 @@ import visitor.Visitor;
 
 public class ArrayAccess extends AbstractExpression implements ASTNode, Expression {
     public Expression name;
-    public Expression expression;
+    public Expression value;
     public int line, column;
 
-    public ArrayAccess(int line, int column, Expression ex, Expression name) {
+    public ArrayAccess(int line, int column, Expression value, Expression name) {
         this.line=line;
         this.column=column;
-        this.expression=ex;
+        this.value=value;
         this.name=name;
     }
 

@@ -6,18 +6,18 @@ import java.util.List;
 
 public interface Type extends ASTNode {
 
-    Type arithmetic(Type other);
-    Type squareBrackets(Type other);
-    Type parenthesis(List<Type> other);
-    Type asLogical();
-    Type arithmetic();
-    Type comparison(Type other);
-    Type logic(Type other);
-    Type logic();
-    Type MustPromoteTo(Type other);
-    Type BuiltInType(Type other);
-    Type canBeCastTo(Type other);
-    Type dot(Type other);
+    Type arithmetic(Type other, int line, int column);
+    Type squareBrackets(Type other, int line, int column);
+    Type parenthesis(List<Type> other, int line, int column);
+    Type asLogical(int line, int column);
+    Type arithmetic(int line, int column);
+    Type comparison(Type other, int line, int column);
+    Type logic(Type other, int line, int column);
+    Type unarynot(int line, int column);
+    Type MustPromoteTo(Type other, int line, int column);
+    Type BuiltInType(Type other, int line, int column);
+    Type canBeCastTo(Type other, int line, int column);
+    Type dot(String name, int line, int column);
 
 
 

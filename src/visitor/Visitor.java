@@ -20,7 +20,7 @@ public interface Visitor<TP,TR> {
     TR visit(CharLiteral charLiteral, TP p);
     TR visit(CharType charType, TP p);
     TR visit(Comparison comparison, TP p);
-    TR visit(Conditional conditional, TP p);
+    TR visit(Iterative conditional, TP p);
     TR visit(DoubleLiteral doubleLiteral, TP p);
     TR visit(DoubleType doubleType, TP p);
     TR visit(ErrorType errorType, TP p);
@@ -33,7 +33,7 @@ public interface Visitor<TP,TR> {
     TR visit(UnaryMinus unaryMinus, TP p);
     TR visit(UnaryNot unaryNot, TP p);
     TR visit(VoidType voidType, TP p);
-    TR visit(Iterative iterative, TP p);
+    TR visit(Conditional iterative, TP p);
     TR visit(Logical logical, TP p);
     TR visit(Print print, TP p);
     TR visit(Return aReturn, TP p);

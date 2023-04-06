@@ -7,18 +7,16 @@ import java.util.List;
 
 public class Iterative implements Statement {
     public Expression expression;
-    public List<Statement> ifBody;
-    public List<Statement> elseBody;
+    public List<Statement> whileBody;
 
     public int line;
     public int column;
 
-    public Iterative(int line, int column, Expression expression, List<Statement> ifBody, List<Statement> elseBody){
-        this.expression=expression;
-        this.ifBody=ifBody;
-        this.elseBody=elseBody;
+    public Iterative(int line, int column, Expression expression, List<Statement> statements){
         this.line=line;
         this.column=column;
+        this.expression=expression;
+        this.whileBody=statements;
     }
 
     @Override

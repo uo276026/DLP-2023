@@ -48,16 +48,16 @@ public class FunctionType extends AbstractType {
     }
 
     @Override
-    public Type parenthesis(List<Type> other) {
+    public Type parenthesis(List<Type> other, int line, int column) {
         if (other.size() != parameters.size())
-            return new ErrorType(this.getLine(), this.getColumn(), "ERROR in line "+this.getLine()+": " +
+            return new ErrorType(line, column, "ERROR in line " + line + ": "+
                     "The number of parameters is wrong");
         boolean wrongType=false;
         for(int i=0;i<other.size();i++){
-            if(!other.get(i).getClass().equals(getParameters().get(i).getColumn())) {
+            if(!other.get(i).getClass().equals(getParameters().get(i).getType().getClass())) {
                 if(other.get(i) instanceof ErrorType)
                     return other.get(i);
-                return new ErrorType(other.get(i).getLine(), other.get(i).getColumn(), "ERROR in line " + other.get(i).getLine() +
+                return new ErrorType(line, column, "ERROR in line " + line +
                         ": The type of the parameter is not the same in the definition of '" + parameters.get(i).getName() + "'");
             }
         }

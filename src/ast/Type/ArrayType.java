@@ -30,14 +30,14 @@ public class ArrayType extends AbstractType {
     }
 
     @Override
-    public Type squareBrackets(Type other){
+    public Type squareBrackets(Type other, int line, int column){
         //a[b] -> Comprobamos que el tipo de b es Int
         if(other instanceof IntType)
             return this.type; //devolvemos el tipo del contenido del array
         if(other instanceof ErrorType)
             return other;
         //Si es double o char, debe dar error
-        return super.arithmetic(other);
+        return super.arithmetic(other, line, column);
     }
 
 }

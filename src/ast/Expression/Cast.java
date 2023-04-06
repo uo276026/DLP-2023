@@ -4,14 +4,14 @@ import ast.Type.Type;
 import visitor.Visitor;
 
 public class Cast extends AbstractExpression implements Expression {
-    public Type type;
+    public Type typeCast;
     public Expression expression;
     public int line, column;
 
-    public Cast(int line, int column, Type type, Expression exp){
+    public Cast(int line, int column, Type typeCast, Expression exp){
         this.line=line;
         this.column=column;
-        this.type=type;
+        this.typeCast=typeCast;
         this.expression=exp;
     }
 

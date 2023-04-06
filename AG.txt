@@ -35,7 +35,7 @@ R = (1) exp.type = new IntType();
 	(14) exp1.type = exp2.type.asLogical();
     (15) exp1.type = exp2.type.BuiltInType();
     (16) exp1.type = exp2.type.canBeCastTo(exp3.type);
-    (17) exp1.type = exp2.type.dot(     );
+    (17) exp1.type = exp2.type.dot(name);
 
 
 

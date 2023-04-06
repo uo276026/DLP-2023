@@ -30,12 +30,17 @@ public class IdentificationVisitor extends AbstractVisitor {
     public Void visit(FunctionDefinition f, Object p) {
         if(st.find(f.getName())==null){
             st.insert(f);
+            st.set();
+            f.getFunctionType().accept(this,p);
+            for(Statement s: f.statements)
+                s.accept(this,p);
+            st.reset();
+        } else{
+            ErrorType et = new ErrorType(f.getLine(), f.getColumn(),
+                    "ERROR in line " + f.getLine() + ": Función '" + f.getName()
+                            + "' is already defined");
         }
-        st.set();
-        f.tipo.accept(this,p);
-        for(Statement s: f.statements)
-            s.accept(this,p);
-        st.reset();
+
         return null;
     }
 

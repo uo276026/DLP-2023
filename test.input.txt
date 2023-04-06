@@ -27,7 +27,7 @@ def getValue(row:int, column:int):int {
 }
 def fill(value:int): {
 	i,j:int;  # Multiple variable definition
-	i = 0;	
+	i = 0;
 	while i < MATRIXSIZE: {
 		j = 0;
 		while j < MATRIXSIZE: {

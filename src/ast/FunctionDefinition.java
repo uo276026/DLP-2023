@@ -10,7 +10,7 @@ import java.util.List;
 public class FunctionDefinition extends AbstractExpression implements Definition, Expression {
 
     public List<Statement> statements;
-    public FunctionType tipo;
+    public FunctionType tipoFuncion;
     public String name;
     public int scope;
 
@@ -22,7 +22,7 @@ public class FunctionDefinition extends AbstractExpression implements Definition
         this.column=column;
         this.name=name;
         this.statements=statements;
-        this.tipo=tipo;
+        this.tipoFuncion=tipo;
     }
 
     @Override
@@ -37,11 +37,11 @@ public class FunctionDefinition extends AbstractExpression implements Definition
 
     @Override
     public Type getType() {
-        return tipo;
+        return tipoFuncion;
     }
 
     public FunctionType getFunctionType(){
-        return tipo;
+        return tipoFuncion;
     }
 
     @Override

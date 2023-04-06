@@ -10,7 +10,7 @@ def main(): {
   print i && f; 	# Error 1, f no es de tipo logico, es un double, tipo invalido para hacer comparaciones
   print a >= 3; 	# Error 2, no se puede comparar aritmeticamente un tipo struct
   while f:     		# Error 3, f no es de tipo logico, es un double, tipo invalido para hacer comparaciones
-    if f:{      		# Error 4,
-      print !f;   	# Error 5,
+    if f:{      		# Error 4
+      print !f;   	# Error 5
     }
 }

@@ -5,108 +5,108 @@ import ast.Expression.*;
 import ast.Type.*;
 import ast.Statement.*;
 
-public abstract class AbstractVisitor implements Visitor{
+public abstract class AbstractVisitor<TP,TR> implements Visitor<TP,TR>{
 
     @Override
-    public Void visit(Arithmetic a, Object p) {
+    public TR visit(Arithmetic a, TP p) {
         a.ex1.accept(this,p);
         a.ex2.accept(this,p);
         return null;
     }
 
     @Override
-    public Object visit(Variable e, Object p) {
+    public TR visit(Variable e, TP p) {
         return null;
     }
 
     @Override
-    public Void visit(Assignment a, Object p) {
+    public TR visit(Assignment a, TP p) {
         a.expression1.accept(this,p);
         a.expression2.accept(this,p);
         return null;
     }
 
     @Override
-    public Void visit(Input a, Object p) {
+    public TR visit(Input a, TP p) {
         a.expression.accept(this,p);
         return null;
     }
 
     @Override
-    public Void visit(Print a, Object p) {
+    public TR visit(Print a, TP p) {
         a.expression.accept(this,p);
         return null;
     }
 
     @Override
-    public Void visit(IntLiteral i, Object p) {
+    public TR visit(IntLiteral i, TP p) {
         return null;
     }
 
     @Override
-    public Void visit(StructAccess sa, Object p) {
+    public TR visit(StructAccess sa, TP p) {
         sa.expression.accept(this,p);
         return null;
     }
 
     @Override
-    public Void visit(ArrayAccess e, Object p) {
-        e.expression.accept(this,p);
+    public TR visit(ArrayAccess e, TP p) {
+        e.value.accept(this,p);
         e.name.accept(this,p);
         return null;
     }
 
     @Override
-    public Void visit(Program program, Object p) {
+    public TR visit(Program program, TP p) {
         for(Definition d: program.defs)
             d.accept(this, p);
         return null;
     }
 
     @Override
-    public Void visit(StructField structField, Object p) {
+    public TR visit(StructField structField, TP p) {
         structField.type.accept(this,p);
         return null;
     }
 
     @Override
-    public Void visit(ArrayType arrayType, Object p) {
+    public TR visit(ArrayType arrayType, TP p) {
         arrayType.type.accept(this, p);
         return null;
     }
 
     @Override
-    public Object visit(VariableDefinition variableDefinition, Object p) {
+    public TR visit(VariableDefinition variableDefinition, TP p) {
         variableDefinition.type.accept(this, p);
         return null;
     }
 
     @Override
-    public Void visit(Cast cast, Object p) {
-        cast.type.accept(this,p);
+    public TR visit(Cast cast, TP p) {
+        cast.typeCast.accept(this,p);
         cast.expression.accept(this,p);
         return null;
     }
 
     @Override
-    public Void visit(CharLiteral charLiteral, Object p) {
+    public TR visit(CharLiteral charLiteral, TP p) {
         return null;
     }
 
     @Override
-    public Void visit(CharType charType, Object p) {
+    public TR visit(CharType charType, TP p) {
         return null;
     }
 
     @Override
-    public Void visit(Comparison c, Object p) {
+    public TR visit(Comparison c, TP p) {
         c.expression1.accept(this,p);
         c.expression2.accept(this,p);
         return null;
     }
 
     @Override
-    public Void visit(Conditional c, Object p) {
+    public TR visit(Iterative c, TP p) {
         c.expression.accept(this,p);
         for(Statement s: c.whileBody)
             s.accept(this,p);
@@ -114,31 +114,30 @@ public abstract class AbstractVisitor implements Visitor{
     }
 
     @Override
-    public Void visit(DoubleLiteral doubleLiteral, Object p) {
+    public TR visit(DoubleLiteral doubleLiteral, TP p) {
         return null;
     }
 
     @Override
-    public Void visit(DoubleType doubleType, Object p) {
+    public TR visit(DoubleType doubleType, TP p) {
         return null;
     }
 
     @Override
-    public Void visit(ErrorType errorType, Object p) {
+    public TR visit(ErrorType errorType, TP p) {
         return null;
     }
 
     @Override
-    public Object visit(FunctionDefinition f, Object p) {
-        f.tipo.accept(this,p);
+    public TR visit(FunctionDefinition f, TP p) {
+        f.getFunctionType().accept(this,p);
         for(Statement s: f.statements)
-            s.accept(this,p);
+            s.accept(this, p);
         return null;
     }
 
-
     @Override
-    public Void visit(FunctionInvocation f, Object p) {
+    public TR visit(FunctionInvocation f, TP p) {
         f.defName.accept(this,p);
         for(Expression s: f.expressions)
             s.accept(this,p);
@@ -146,7 +145,7 @@ public abstract class AbstractVisitor implements Visitor{
     }
 
     @Override
-    public Void visit(FunctionType functionType, Object p) {
+    public TR visit(FunctionType functionType, TP p) {
         functionType.returnType.accept(this,p);
         for(VariableDefinition s: functionType.parameters)
             s.accept(this,p);
@@ -156,31 +155,31 @@ public abstract class AbstractVisitor implements Visitor{
 
 
     @Override
-    public Void visit(IntType intType, Object p) {
+    public TR visit(IntType intType, TP p) {
         return null;
     }
 
 
 
     @Override
-    public Void visit(UnaryMinus unaryMinus, Object p) {
+    public TR visit(UnaryMinus unaryMinus, TP p) {
         unaryMinus.expression.accept(this,p);
         return null;
     }
 
     @Override
-    public Void visit(UnaryNot unaryNot, Object p) {
+    public TR visit(UnaryNot unaryNot, TP p) {
         unaryNot.expression.accept(this,p);
         return null;
     }
 
     @Override
-    public Void visit(VoidType voidType, Object p) {
+    public TR visit(VoidType voidType, TP p) {
         return null;
     }
 
     @Override
-    public Void visit(Iterative c, Object p) {
+    public TR visit(Conditional c, TP p) {
         c.expression.accept(this,p);
         for(Statement s: c.ifBody)
             s.accept(this,p);
@@ -190,7 +189,7 @@ public abstract class AbstractVisitor implements Visitor{
     }
 
     @Override
-    public Void visit(Logical logical, Object p) {
+    public TR visit(Logical logical, TP p) {
         logical.expression1.accept(this,p);
         logical.expression2.accept(this,p);
         return null;
@@ -199,13 +198,13 @@ public abstract class AbstractVisitor implements Visitor{
 
 
     @Override
-    public Void visit(Return r, Object p) {
+    public TR visit(Return r, TP p) {
         r.expression.accept(this,p);
         return null;
     }
 
     @Override
-    public Void visit(StructType structType, Object p) {
+    public TR visit(StructType structType, TP p) {
         for(StructField sf:structType.fields)
             sf.accept(this,p);
         return null;

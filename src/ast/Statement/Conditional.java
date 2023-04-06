@@ -7,16 +7,18 @@ import java.util.List;
 
 public class Conditional implements Statement {
     public Expression expression;
-    public List<Statement> whileBody;
+    public List<Statement> ifBody;
+    public List<Statement> elseBody;
 
     public int line;
     public int column;
 
-    public Conditional(int line, int column, Expression expression, List<Statement> statements){
+    public Conditional(int line, int column, Expression expression, List<Statement> ifBody, List<Statement> elseBody){
+        this.expression=expression;
+        this.ifBody=ifBody;
+        this.elseBody=elseBody;
         this.line=line;
         this.column=column;
-        this.expression=expression;
-        this.whileBody=statements;
     }
 
     @Override

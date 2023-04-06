@@ -93,8 +93,8 @@ expression returns [Expression ast]:
 
 // f(xx)
 llamada_funcion returns [FunctionInvocation ast, List<Expression> exps = new ArrayList<Expression>()]:
-    ID '(' (ex1=expression(','ex2=expression)*)? ')'
-            { try { $exps.add($ex1.ast); $exps.add($ex2.ast); } catch(NullPointerException e){ }
+    ID '(' (ex1=expression(','ex2=expression {$exps.add($ex2.ast);})*)? ')'
+            { try { $exps.add($ex1.ast); } catch(NullPointerException e){ }
               $ast = new FunctionInvocation($ID.getLine(), $ID.getCharPositionInLine()+1, $exps,
                 new Variable($ID.getLine(), $ID.getCharPositionInLine()+1, $ID.getText())); }
     ;
@@ -147,7 +147,7 @@ struct_fields returns [List<StructField> ast=new ArrayList<StructField>()]:
                                                 for (int i = 0; i < $fields.ast.size(); i++) {
                                                     if($struct_field.ast.get(j).getName().equals($fields.ast.get(i).getName())) {
                                                         ErrorType et = new ErrorType($struct_field.ast.get(j).getLine(), $struct_field.ast.get(j).getColumn(),
-                                                        "ERROR in line "+$struct_field.ast.get(j).getLine()+": duplicated variable '"+$struct_field.ast.get(j).getName()+"'");
+                                                        "ERROR in line "+$fields.ast.get(i).getLine()+": duplicated variable '"+$struct_field.ast.get(j).getName()+"'");
                                                     }
                                                 }
                                                 // Si recorre la lista y no da error, lo añade
@@ -176,10 +176,10 @@ statement returns [List<Statement> ast = new ArrayList<Statement>(), List<Expres
     | llamada_funcion';' { $ast.add($llamada_funcion.ast); }
     | 'return' expression ';' { $ast.add(new Return($expression.ast.getLine(), $expression.ast.getColumn(), $expression.ast)); }
     | 'while' expression ':' statementsWhile=contenido_bucle
-        { $ast.add(new Conditional($expression.ast.getLine(), $expression.ast.getColumn(), $expression.ast, $statementsWhile.ast)); }
+        { $ast.add(new Iterative($expression.ast.getLine(), $expression.ast.getColumn(), $expression.ast, $statementsWhile.ast)); }
     | 'if' (expression|'(' expression ')') ':' ifBody=contenido_bucle ('else' 'if' ':' contenido_bucle)* ('else' ':' elseBody=contenido_bucle)?
         { List<Statement> elseList=new ArrayList<Statement>(); try { elseList=$elseBody.ast; } catch(NullPointerException e){}
-          $ast.add(new Iterative($expression.ast.getLine(), $expression.ast.getColumn(), $expression.ast, $ifBody.ast, elseList)); }
+          $ast.add(new Conditional($expression.ast.getLine(), $expression.ast.getColumn(), $expression.ast, $ifBody.ast, elseList)); }
     | 'print' ex=expresiones_coma ';' { for (int i = 0; i < $ex.ast.size(); i++) {
             $ast.add(new Print($ex.ast.get(i).getLine(), $ex.ast.get(i).getColumn(), $ex.ast.get(i))); } }
     | 'input' ex=expresiones_coma ';' { for (int i = 0; i < $ex.ast.size(); i++) {
