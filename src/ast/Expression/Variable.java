@@ -5,12 +5,11 @@ import ast.Expression.Expression;
 import ast.Type.Type;
 import visitor.Visitor;
 
-public class Variable extends AbstractExpression implements Expression {
+public class Variable extends AbstractExpression {
     public String name;
     public int line, column;
     public boolean lvalue;
     public Definition def;
-    public Type type = def.getType();
 
     public Variable(int line, int column, String name) {
         this.line=line;
@@ -37,8 +36,7 @@ public class Variable extends AbstractExpression implements Expression {
         return name;
     }
 
-    @Override
-    public Type getType() {
-        return type;
-    }
+
+
+
 }

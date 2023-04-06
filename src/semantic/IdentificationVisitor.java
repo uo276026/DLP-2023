@@ -49,6 +49,7 @@ public class IdentificationVisitor extends AbstractVisitor {
                     "ERROR in line " + e.getLine() + ": Variable '" + e.getName()
                             + "' is not defined");
         }
+        e.def=def;
         return null;
     }
 

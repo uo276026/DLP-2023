@@ -175,8 +175,8 @@ statement returns [List<Statement> ast = new ArrayList<Statement>(), List<Expres
       asignacion ';' { $ast.add($asignacion.ast); }
     | llamada_funcion';' { $ast.add($llamada_funcion.ast); }
     | 'return' expression ';' { $ast.add(new Return($expression.ast.getLine(), $expression.ast.getColumn(), $expression.ast)); }
-    | 'while' expression ':' '{' (statement {for (int i = 0; i < $statement.ast.size(); i++) { $statements.add($statement.ast.get(i)); }} )* '}'
-        { $ast.add(new Conditional($expression.ast.getLine(), $expression.ast.getColumn(), $expression.ast, $statements)); }
+    | 'while' expression ':' statementsWhile=contenido_bucle
+        { $ast.add(new Conditional($expression.ast.getLine(), $expression.ast.getColumn(), $expression.ast, $statementsWhile.ast)); }
     | 'if' (expression|'(' expression ')') ':' ifBody=contenido_bucle ('else' 'if' ':' contenido_bucle)* ('else' ':' elseBody=contenido_bucle)?
         { List<Statement> elseList=new ArrayList<Statement>(); try { elseList=$elseBody.ast; } catch(NullPointerException e){}
           $ast.add(new Iterative($expression.ast.getLine(), $expression.ast.getColumn(), $expression.ast, $ifBody.ast, elseList)); }

@@ -148,7 +148,7 @@ public abstract class AbstractVisitor implements Visitor{
     @Override
     public Void visit(FunctionType functionType, Object p) {
         functionType.returnType.accept(this,p);
-        for(VariableDefinition s: functionType.parametros)
+        for(VariableDefinition s: functionType.parameters)
             s.accept(this,p);
         return null;
     }

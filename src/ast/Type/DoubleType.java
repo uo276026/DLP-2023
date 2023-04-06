@@ -25,4 +25,13 @@ public class DoubleType extends AbstractType {
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP p) {
         return v.visit(this,p);
     }
+
+    @Override
+    public Type arithmetic(Type other){
+        //Si es double o Error, devolvemos other
+        if(other instanceof DoubleType || other instanceof ErrorType)
+            return other;
+        //Si es int o char, debe dar error
+        return super.arithmetic(other);
+    }
 }

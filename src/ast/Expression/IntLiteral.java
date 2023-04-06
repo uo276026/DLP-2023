@@ -1,9 +1,10 @@
 package ast.Expression;
 
+import ast.Type.IntType;
 import ast.Type.Type;
 import visitor.Visitor;
 
-public class IntLiteral extends AbstractExpression implements Expression {
+public class IntLiteral extends AbstractExpression {
     public int value;
     public int line, column;
 
@@ -15,12 +16,12 @@ public class IntLiteral extends AbstractExpression implements Expression {
 
     @Override
     public int getLine() {
-        return 0;
+        return line;
     }
 
     @Override
     public int getColumn() {
-        return 0;
+        return column;
     }
 
     @Override

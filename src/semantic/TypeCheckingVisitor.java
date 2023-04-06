@@ -6,6 +6,9 @@ import ast.Type.*;
 import visitor.AbstractVisitor;
 import ast.Statement.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class TypeCheckingVisitor extends AbstractVisitor {
 
     /*3 preguntas:
@@ -19,6 +22,8 @@ public class TypeCheckingVisitor extends AbstractVisitor {
         a.ex1.accept(this,p);
         a.ex2.accept(this,p);
         a.setLValue(false); //Una op nunca ira a la izquierda
+
+        a.setType(a.ex1.getType().arithmetic(a.ex2.getType()));
         return null;
     }
 
@@ -32,6 +37,9 @@ public class TypeCheckingVisitor extends AbstractVisitor {
             ErrorType et = new ErrorType(a.expression1.getLine(), a.expression1.getColumn(),
                     "ERROR in line " + a.expression1.getLine() + ": Wrong type at assignment");
         }
+
+        //El tipo de exp1 ya esta definido, pero hay que comprobar que es el mismo que tipo 2
+        a.expression1.setType(a.expression2.getType().MustPromoteTo(a.expression1.getType()));
         return null;
     }
 
@@ -49,20 +57,23 @@ public class TypeCheckingVisitor extends AbstractVisitor {
     @Override
     public Void visit(Variable v, Object p) {
         v.setLValue(true);
+
+        v.setType(v.def.getType());
         return null;
     }
 
     @Override
     public Void visit(IntLiteral i, Object p) {
         i.setLValue(false);
+
+        i.setType(new IntType(i.getLine(), i.getColumn()));
         return null;
     }
 
-    //fieldAccess visitar unico hijo y poner lvalue a true
     @Override
     public Void visit(StructAccess sa, Object p) {
         sa.expression.accept(this,p);
-        sa.setLValue(true);
+        sa.setLValue(false);
         return null;
     }
 
@@ -72,6 +83,8 @@ public class TypeCheckingVisitor extends AbstractVisitor {
         e.expression.accept(this,p);
         e.name.accept(this,p);
         e.setLValue(true);
+
+        e.setType(e.getType().squareBrackets(e.expression.getType()));
         return null;
     }
 
@@ -84,8 +97,10 @@ public class TypeCheckingVisitor extends AbstractVisitor {
     }
 
     @Override
-    public Void visit(CharLiteral charLiteral, Object p) {
-        charLiteral.setLValue(false);
+    public Void visit(CharLiteral c, Object p) {
+        c.setLValue(false);
+
+        c.setType(new CharType(c.getLine(), c.getColumn()));
         return null;
     }
 
@@ -98,17 +113,20 @@ public class TypeCheckingVisitor extends AbstractVisitor {
     }
 
     @Override
-    public Void visit(DoubleLiteral doubleLiteral, Object p) {
-        doubleLiteral.setLValue(false);
+    public Void visit(DoubleLiteral d, Object p) {
+        d.setLValue(false);
+
+        d.setType(new DoubleType(d.getLine(), d.getColumn()));
         return null;
     }
 
     @Override
     public Void visit(FunctionDefinition f, Object p) {
-        f.tipo.accept(this,p);
+        f.getType().accept(this,p);
         for(Statement s: f.statements)
             s.accept(this,p);
         f.setLValue(false);
+
         return null;
     }
 
@@ -118,6 +136,9 @@ public class TypeCheckingVisitor extends AbstractVisitor {
         for(Expression s: f.expressions)
             s.accept(this,p);
         f.setLValue(true);
+
+        List<Type> tipos = f.expressions.stream().map(Expression::getType).collect(Collectors.toList());
+        f.setType(f.defName.getType().parenthesis(tipos));
         return null;
     }
 

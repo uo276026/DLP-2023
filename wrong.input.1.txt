@@ -6,6 +6,6 @@ def main(): {
   input integer; 
   character = 8.5;	# Error 1, character es un char
   3 = integer;		# Error 2, se esperaba un lvalue
-  input integer+2; 	# Error 3, se esperaa un lvalue
+  input integer+2; 	# Error 3, se esperaba un lvalue
 }
 

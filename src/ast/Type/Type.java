@@ -2,20 +2,22 @@ package ast.Type;
 
 import ast.ASTNode;
 
+import java.util.List;
+
 public interface Type extends ASTNode {
 
-    Type arithmetic(Type type);
-    Type squareBrackets(Type type);
-    Type parenthesis(Type type);
+    Type arithmetic(Type other);
+    Type squareBrackets(Type other);
+    Type parenthesis(List<Type> other);
     Type asLogical();
     Type arithmetic();
-    Type comparison(Type type);
-    Type logic(Type type);
+    Type comparison(Type other);
+    Type logic(Type other);
     Type logic();
-    Type MustPromoteTo(Type type);
-    Type BuiltInType(Type type);
-    Type canBeCastTo(Type type);
-    Type dot(Type type);
+    Type MustPromoteTo(Type other);
+    Type BuiltInType(Type other);
+    Type canBeCastTo(Type other);
+    Type dot(Type other);
 
 
 
