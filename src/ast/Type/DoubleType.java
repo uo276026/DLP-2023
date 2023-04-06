@@ -43,7 +43,7 @@ public class DoubleType extends AbstractType {
     }
 
     @Override
-    public Type arithmetic(int line, int column){
+    public Type unaryminus(int line, int column){
         return this;
     }
 

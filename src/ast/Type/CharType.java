@@ -46,7 +46,7 @@ public class CharType extends AbstractType {
     }
 
     @Override
-    public Type arithmetic(int line, int column){
+    public Type unaryminus(int line, int column){
         return new IntType(line, column);
     }
 

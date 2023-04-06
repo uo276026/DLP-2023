@@ -10,7 +10,7 @@ public interface Type extends ASTNode {
     Type squareBrackets(Type other, int line, int column);
     Type parenthesis(List<Type> other, int line, int column);
     Type asLogical(int line, int column);
-    Type arithmetic(int line, int column);
+    Type unaryminus(int line, int column);
     Type comparison(Type other, int line, int column);
     Type logic(Type other, int line, int column);
     Type unarynot(int line, int column);

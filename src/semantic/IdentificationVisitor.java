@@ -37,7 +37,7 @@ public class IdentificationVisitor extends AbstractVisitor {
             st.reset();
         } else{
             ErrorType et = new ErrorType(f.getLine(), f.getColumn(),
-                    "ERROR in line " + f.getLine() + ": Función '" + f.getName()
+                    "ERROR in line " + f.getLine() + ": Function '" + f.getName()
                             + "' is already defined");
         }
 
@@ -47,14 +47,16 @@ public class IdentificationVisitor extends AbstractVisitor {
 
 
     @Override
-    public Void visit(Variable e, Object p) {
-        Definition def = st.find(e.getName());
+    public Void visit(Variable var, Object p) {
+        Definition def = st.findInCurrentScope(var.getName());
+        if(def==null)
+            def= st.find(var.getName());
         if(def==null) {
-            ErrorType et = new ErrorType(e.getLine(), e.getColumn(),
-                    "ERROR in line " + e.getLine() + ": Variable '" + e.getName()
+            ErrorType et = new ErrorType(var.getLine(), var.getColumn(),
+                    "ERROR in line " + var.getLine() + ": Variable '" + var.getName()
                             + "' is not defined");
         }
-        e.def=def;
+        var.def=def;
         return null;
     }
 

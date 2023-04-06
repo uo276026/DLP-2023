@@ -36,7 +36,7 @@ public class IntType extends AbstractType {
     }
 
     @Override
-    public Type arithmetic(int line, int column){
+    public Type unaryminus(int line, int column){
         return this;
     }
 
@@ -50,5 +50,10 @@ public class IntType extends AbstractType {
         if(other instanceof IntType || other instanceof DoubleType || other instanceof CharType || other instanceof ErrorType)
             return this;
         return super.arithmetic(this, line, column);
+    }
+
+    @Override
+    public Type unarynot(int line, int column) {
+        return this;
     }
 }

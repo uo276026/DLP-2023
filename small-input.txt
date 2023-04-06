@@ -1,9 +1,13 @@
+integer:int;
+character:char;
+real, integer:double; # Error 1, variable ya definida
 
-v:[10]int ;
+def p(a:int): {
+  a:char;             # Error 2, variable duplicada
+}
 
 def main(): {
-  i:int;
-  i[0] = 0;		# Error 1, a tipo entero no se puede acceder con coorchetes
-  v[3] = 3.4;		# Error 2, no se puede asignar double a lista de int
-  v[1][2] = 'a';	# Error 3, intenta asignar char a lista de int y al tipo no se puede acceder con coorchetes dobles
-}				#depende como lo hayamos hecho, solo tendra un error, ya que se propagara
+  character:double;
+  input integer, i;   # Error 3, variable i no definida
+  f();                # Error 4, f no definida
+}

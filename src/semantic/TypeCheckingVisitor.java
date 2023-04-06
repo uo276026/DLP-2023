@@ -57,8 +57,8 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
     @Override
     public Void visit(Variable v, Type p) {
         v.setLValue(true);
-
-        v.setType(v.def.getType());
+        if(v.def!=null)
+            v.setType(v.def.getType());
         return null;
     }
 
@@ -143,7 +143,8 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         f.setLValue(true);
 
         List<Type> tipos = f.expressions.stream().map(Expression::getType).collect(Collectors.toList());
-        f.setType(f.defName.getType().parenthesis(tipos, f.getLine(), f.getColumn()));
+        if(f.defName.getType()!=null)
+            f.setType(f.defName.getType().parenthesis(tipos, f.getLine(), f.getColumn()));
         return null;
     }
 
@@ -154,7 +155,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         unaryMinus.expression.accept(this,p);
         unaryMinus.setLValue(false);
 
-        unaryMinus.setType(unaryMinus.expression.getType().arithmetic(unaryMinus.getLine(), unaryMinus.getColumn()));
+        unaryMinus.setType(unaryMinus.expression.getType().unaryminus(unaryMinus.getLine(), unaryMinus.getColumn()));
         return null;
     }
 

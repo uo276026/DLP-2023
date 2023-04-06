@@ -39,7 +39,7 @@ def fill(value:int): {
 }
 def show(): {
 	i,j:int;
-	i = 0;	
+	i = 0;
 	print '[','\n';
 	while i < MATRIXSIZE: {
 		j = 0;
@@ -51,15 +51,15 @@ def show(): {
 			}
 			j = j + 1;
 		}
-		print ']','\n';	
+		print ']','\n';
 		i = i + 1;
-	}	
-	print ']';	
+	}
+	print ']';
 }
 
 # Record
-date:struct { 
-	day, mounth, year:int;	
+date:struct {
+	day, mounth, year:int;
 };
 
 # Main program

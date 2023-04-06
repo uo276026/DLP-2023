@@ -32,9 +32,9 @@ public abstract class AbstractType implements Type{
     }
 
     @Override
-    public Type arithmetic(int line, int column) {
+    public Type unaryminus(int line, int column) {
         return new ErrorType(line, column,
-                "ERROR in line " + line + ": Wrong type, it can't do Arithmetic operations");
+                "ERROR in line " + line + ": Wrong type, it can't do unary minus operations");
     }
 
     @Override
@@ -69,6 +69,8 @@ public abstract class AbstractType implements Type{
 
     @Override
     public Type BuiltInType(Type other, int line, int column) {
+        if(this.getClass().equals(other.getClass()))
+            return other;
         return new ErrorType(line, column,
                 "ERROR in line " + line + ": Different types at Return");
     }
