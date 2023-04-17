@@ -48,6 +48,11 @@ public class FunctionType extends AbstractType {
     }
 
     @Override
+    public int numberOfBytes() {
+        return returnType.numberOfBytes();
+    }
+
+    @Override
     public Type parenthesis(List<Type> other, int line, int column) {
         if (other.size() != parameters.size())
             return new ErrorType(line, column, "ERROR in line " + line + ": "+

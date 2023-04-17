@@ -34,6 +34,14 @@ public class StructType extends AbstractType {
     }
 
     @Override
+    public int numberOfBytes() {
+        int sumBytes=0;
+        for(StructField s:fields)
+            sumBytes+=s.getType().numberOfBytes();
+        return sumBytes;
+    }
+
+    @Override
     public Type dot(String name, int line, int column){
         for(StructField sf:fields){
             if (sf.getName().equals(name))

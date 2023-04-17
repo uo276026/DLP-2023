@@ -56,4 +56,9 @@ public class IntType extends AbstractType {
     public Type unarynot(int line, int column) {
         return this;
     }
+
+    @Override
+    public int numberOfBytes() {
+        return 2;
+    }
 }

@@ -54,4 +54,9 @@ public class DoubleType extends AbstractType {
         return super.arithmetic(this, line, column);
     }
 
+    @Override
+    public int numberOfBytes() {
+        return 4;
+    }
+
 }

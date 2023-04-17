@@ -11,6 +11,7 @@ public class VariableDefinition implements Definition, Statement {
     public Type type;
     public String name;
     public int scope;
+    public int offset;
 
     public VariableDefinition(int line, int column, Type type, String name){
         this.line=line;
@@ -52,5 +53,13 @@ public class VariableDefinition implements Definition, Statement {
     @Override
     public void setScope(int scope) {
         this.scope=scope;
+    }
+
+    public int getOffSet() {
+        return offset;
+    }
+
+    public void setOffSet(int offset) {
+        this.offset=offset;
     }
 }

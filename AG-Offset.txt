@@ -1,0 +1,47 @@
+
+G = (1) Program: program → vardefinition* statement*
+    (2) VarDefinition: vardefinition → type ID
+    (3) RecordType: type → field*
+    (4) RecordField: field → ID type
+    (5) FuncDefinition: funcdefinition → type ID vardefinition* statement*
+    (6) FunctionType: type1 → type2 vardefinition*
+
+A = {vardefinition.offset, field.offset} <- int
+
+R = (2) int sumBytesGlobal=0;
+        int sumBytesLocal=0;
+        if(scope=0) //var global
+            offset=sumBytesGlobal;
+            sumBytesGlobal += type;
+        else //solo llegara aqui las var locales, no parametros
+            sumBytesLocal+=type.numberOfBytes();
+            offset=-sumBytesLocal;
+    (3) int totalOffSet = 0;
+        for(RecordField field: field*)
+           field.offset = totalOffSet;
+           totalOffSet += f.type.numberOfBytes;
+    (6) int paramBytesSum = 0;
+        for(int i=vardefinition*.size-1;i>=0;i--)
+            varDef vardef = varDefinition*.get(i)
+            varDef.offset = 4 + paramBytesSum;
+            paramBytesSum += vardef.type.numberOfBytes;
+
+------------------------otra manera---------------------------------
+    (3) sumOffSetRecordTYpe=0;
+    (4) int sumOffSetRecordTYpe;
+        //varGlobalVisitoroffset
+        field.offset = sumOffSetRecordTYpe;
+        sumOffSetRecordTYpe = type.numberOfBytes;
+    (5) int localBytesSum = 0;
+            for(VarDefinition varDef: vardefinition*)
+                localBytesSum += varDef.type.numberOfBytes;
+                varDef.offset -= localBytesSum;
+
+
+
+
+
+
+
+
+

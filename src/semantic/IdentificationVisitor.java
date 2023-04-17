@@ -6,12 +6,12 @@ import visitor.AbstractVisitor;
 import symboltable.SymbolTable;
 import ast.Type.*;
 
-public class IdentificationVisitor extends AbstractVisitor {
+public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 
     SymbolTable st = new SymbolTable();
 
     @Override
-    public Void visit(VariableDefinition variableDefinition, Object p) {
+    public Void visit(VariableDefinition variableDefinition, Void p) {
         variableDefinition.getType().accept(this,p);
         Definition def;
         def = st.findInCurrentScope(variableDefinition.getName());
@@ -27,7 +27,7 @@ public class IdentificationVisitor extends AbstractVisitor {
     }
 
     @Override
-    public Void visit(FunctionDefinition f, Object p) {
+    public Void visit(FunctionDefinition f, Void p) {
         if(st.find(f.getName())==null){
             st.insert(f);
             st.set();
@@ -47,7 +47,7 @@ public class IdentificationVisitor extends AbstractVisitor {
 
 
     @Override
-    public Void visit(Variable var, Object p) {
+    public Void visit(Variable var, Void p) {
         Definition def = st.findInCurrentScope(var.getName());
         if(def==null)
             def= st.find(var.getName());

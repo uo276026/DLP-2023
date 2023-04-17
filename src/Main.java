@@ -1,3 +1,4 @@
+import codegenerator.OffSetVisitor;
 import org.antlr.v4.runtime.*;
 import introspector.model.IntrospectorModel;
 
@@ -9,7 +10,6 @@ import semantic.IdentificationVisitor;
 import semantic.TypeCheckingVisitor;
 
 public class Main {
-	
 	public static void main(String... args) throws Exception {
 		   if (args.length<1) {
 		        System.err.println("Please, pass me the input file.");
@@ -22,7 +22,7 @@ public class Main {
 
 		// create a parser that feeds off the tokens buffer
 		CommonTokenStream tokens = new CommonTokenStream(lexer); 
-		PmmParser parser = new PmmParser(tokens);	
+		PmmParser parser = new PmmParser(tokens);
 		ASTNode ast = parser.program().ast;
 
 		ast.accept(new IdentificationVisitor(), null);
@@ -35,6 +35,7 @@ public class Main {
 		}
 		else{
 			// * The AST is shown
+			ast.accept(new OffSetVisitor(),null);
 			IntrospectorModel model=new IntrospectorModel("Program", ast);
 			new IntrospectorView("Introspector", model);
 		}

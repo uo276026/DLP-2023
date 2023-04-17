@@ -28,6 +28,11 @@ public class CharType extends AbstractType {
     }
 
     @Override
+    public int numberOfBytes() {
+        return 1;
+    }
+
+    @Override
     public Type arithmetic(Type other, int line, int column){
         //Si other es char, devolvemos int
         if(other instanceof IntType)

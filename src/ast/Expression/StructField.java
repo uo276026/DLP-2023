@@ -9,6 +9,7 @@ public class StructField extends AbstractExpression implements ASTNode {
     public Type type;
     public String name;
     public int line,column;
+    public int offset;
 
     public StructField(int line, int column, Type type, String name){
         this.line=line;
@@ -34,5 +35,13 @@ public class StructField extends AbstractExpression implements ASTNode {
     @Override
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP p) {
         return v.visit(this,p);
+    }
+
+    public int getOffSet() {
+        return offset;
+    }
+
+    public void setOffSet(int offset) {
+        this.offset=offset;
     }
 }
