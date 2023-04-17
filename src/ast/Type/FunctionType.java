@@ -57,7 +57,6 @@ public class FunctionType extends AbstractType {
         if (other.size() != parameters.size())
             return new ErrorType(line, column, "ERROR in line " + line + ": "+
                     "The number of parameters is wrong");
-        boolean wrongType=false;
         for(int i=0;i<other.size();i++){
             if(!other.get(i).getClass().equals(getParameters().get(i).getType().getClass())) {
                 if(other.get(i) instanceof ErrorType)

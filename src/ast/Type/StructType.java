@@ -37,7 +37,7 @@ public class StructType extends AbstractType {
     public int numberOfBytes() {
         int sumBytes=0;
         for(StructField s:fields)
-            sumBytes+=s.getType().numberOfBytes();
+            sumBytes+=s.type.numberOfBytes();
         return sumBytes;
     }
 

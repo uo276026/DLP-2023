@@ -52,9 +52,9 @@ definition returns [List<Definition> ast = new ArrayList<Definition>(), List<Sta
 
 parametros_funcion returns [List<VariableDefinition> ast = new ArrayList<VariableDefinition>()]:
     ID ':' tipo { $ast.add(new VariableDefinition($ID.getLine(), $ID.getCharPositionInLine()+1, $tipo.ast, $ID.getText())); }
-    | ID ':' tipo ',' parametros_funcion { $parametros_funcion.ast.add
+    | params=parametros_funcion ',' ID ':' tipo  { $params.ast.add
                 (new VariableDefinition($ID.getLine(), $ID.getCharPositionInLine()+1, $tipo.ast, $ID.getText()));
-                 $ast = $parametros_funcion.ast;
+                 $ast = $params.ast;
                 }
     ;
 
@@ -93,8 +93,8 @@ expression returns [Expression ast]:
 
 // f(xx)
 llamada_funcion returns [FunctionInvocation ast, List<Expression> exps = new ArrayList<Expression>()]:
-    ID '(' (ex1=expression(','ex2=expression {$exps.add($ex2.ast);})*)? ')'
-            { try { $exps.add($ex1.ast); } catch(NullPointerException e){ }
+    ID '(' (ex1=expression { try { $exps.add($ex1.ast); } catch(NullPointerException e){ }}
+            (','ex2=expression {$exps.add($ex2.ast);})*)? ')'{
               $ast = new FunctionInvocation($ID.getLine(), $ID.getCharPositionInLine()+1, $exps,
                 new Variable($ID.getLine(), $ID.getCharPositionInLine()+1, $ID.getText())); }
     ;
