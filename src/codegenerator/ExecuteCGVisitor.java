@@ -5,9 +5,11 @@ import ast.Expression.Arithmetic;
 import ast.FunctionDefinition;
 import ast.Program;
 import ast.Statement.Assignment;
+import ast.Statement.Input;
 import ast.Statement.Print;
 import ast.Statement.Statement;
 import ast.Type.FunctionType;
+import ast.Type.Type;
 import ast.VariableDefinition;
 
 public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
@@ -61,20 +63,25 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
                 codeGenerator.printLine(s.getLine());
                 s.accept(this, p);
             }
-
         }
+
+        FunctionType funcType= (FunctionType) f.getType();
+        Type returnType= funcType.getReturnType();
+        codeGenerator.ret(returnType.numberOfBytes(), localBytes, funcType.getParamBytes());
 
         return null;
     }
 
     @Override
     public Void visit(FunctionType functionType, Void p) {
-        //functionType.returnType.accept(this,p);
+        int paramBytes=0;
         codeGenerator.printString("\t\t' * Parameters");
         for(VariableDefinition s: functionType.parameters) {
+            paramBytes += s.getType().numberOfBytes();
             codeGenerator.varDefinition(s);
             s.accept(this, p);
         }
+        functionType.setParamBytes(paramBytes);
         return null;
     }
 
@@ -94,6 +101,17 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
         codeGenerator.out(print.expression.getType());
         return null;
     }
+
+    @Override
+    public Void visit(Input input, Void p) {
+        codeGenerator.printString("\t\t' * Read");
+        input.expression.accept(addressCGVisitor, p);
+        codeGenerator.in(input.expression.getType());
+        codeGenerator.store(input.expression.getType());
+        return null;
+    }
+
+
 
 
 

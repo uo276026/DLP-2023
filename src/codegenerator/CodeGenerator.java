@@ -42,7 +42,7 @@ public class CodeGenerator {
     }
 
     public void push(double d){
-        out.println("\t\tpushf\t"+(int)d);
+        out.println("\t\tpushf\t"+d);
         out.flush();
     }
 
@@ -68,8 +68,23 @@ public class CodeGenerator {
         out.flush();
     }
 
+    public void sub(Type type) {
+        out.println("\t\tsub"+type.suffix());
+        out.flush();
+    }
+
+    public void div(Type type) {
+        out.println("\t\tdiv"+type.suffix());
+        out.flush();
+    }
+
     public void add(Type type) {
         out.println("\t\tadd"+type.suffix());
+        out.flush();
+    }
+
+    public void mod(Type type) {
+        out.println("\t\tmod"+type.suffix());
         out.flush();
     }
 
@@ -110,9 +125,90 @@ public class CodeGenerator {
         out.flush();
     }
 
+    public void in(Type type) {
+        out.println("\t\tin"+type.suffix());
+        out.flush();
+    }
+
     public void convert(Type type, Type typeTo) {
         if(type.suffix()!=typeTo.suffix()){
-            out.println("\t\t"+type.suffix()+"2"+typeTo.suffix());
+            if(type.suffix()=="f"&&typeTo.suffix()=="b"){
+                out.println("\t\tf2i");
+                out.println("\t\ti2b");
+            } else if(type.suffix()=="b"&&typeTo.suffix()=="f"){
+                out.println("\t\tb2i");
+                out.println("\t\ti2f");
+            } else {
+                out.println("\t\t" + type.suffix() + "2" + typeTo.suffix());
+            }
+            out.flush();
         }
+    }
+
+    public void operation(String operator, Type type) {
+        switch(operator){
+            case "+":
+                add(type);
+                break;
+            case "-":
+                sub(type);
+                break;
+            case "*":
+                mul(type);
+                break;
+            case "/":
+                div(type);
+                break;
+            case "%":
+                mod(type);
+                break;
+        }
+    }
+
+
+    public void comparison(String operator, Type type) {
+        switch(operator){
+            case "==":
+                out.println("\t\teq"+type.suffix()); //equals
+                break;
+            case "!=":
+                out.println("\t\tne"+type.suffix()); //not equals
+                break;
+            case "<":
+                out.println("\t\tlt"+type.suffix()); //lower than
+                break;
+            case ">":
+                out.println("\t\tgt"+type.suffix()); //greater than
+                break;
+            case ">=":
+                out.println("\t\tge"+type.suffix()); //greater or equals
+                break;
+            case "<=":
+                out.println("\t\tle"+type.suffix()); //lower or equals
+                break;
+        }
+        out.flush();
+    }
+
+    public void logical(String operator) {
+        switch(operator){
+            case "&&":
+                out.println("\t\tand");
+                break;
+            case "||":
+                out.println("\t\tor");
+                break;
+        }
+        out.flush();
+    }
+
+    public void not() {
+        out.println("\t\tnot");
+        out.flush();
+    }
+
+    public void ret(int returnBytes, int localBytes, int paramBytes) {
+        out.println("\t\tret\t"+returnBytes+", "+localBytes+", "+paramBytes);
+        out.flush();
     }
 }

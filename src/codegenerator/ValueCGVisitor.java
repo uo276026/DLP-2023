@@ -1,6 +1,7 @@
 package codegenerator;
 
 import ast.Expression.*;
+import ast.Statement.Input;
 import ast.VariableDefinition;
 
 public class ValueCGVisitor extends AbstractCGVisitor<Void, Void>{
@@ -39,9 +40,38 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void>{
 
     @Override
     public Void visit(Arithmetic a, Void p) {
-        codeGenerator.convert(a.ex1.getType(), a.getType());
-        codeGenerator.convert(a.ex2.getType(), a.getType());
-        //codeGenerator.operation();
+        a.ex1.accept(this,p);
+        a.ex2.accept(this,p);
+        codeGenerator.operation(a.operator, a.getType());
+        return null;
+    }
+
+    @Override
+    public Void visit(Comparison a, Void p) {
+        a.expression1.accept(this,p);
+        a.expression2.accept(this,p);
+        codeGenerator.comparison(a.operator, a.getType());
+        return null;
+    }
+
+    @Override
+    public Void visit(Logical a, Void p) {
+        a.expression1.accept(this,p);
+        a.expression2.accept(this,p);
+        codeGenerator.logical(a.operator);
+        return null;
+    }
+
+    public Void visit(Cast c, Void p){
+        c.expression.accept(this,p);
+        codeGenerator.convert(c.expression.getType(), c.getType());
+        return null;
+    }
+
+    @Override
+    public Void visit(UnaryNot u, Void p) {
+        u.expression.accept(this,p);
+        codeGenerator.not();
         return null;
     }
 
