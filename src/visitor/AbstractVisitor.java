@@ -1,9 +1,12 @@
 package visitor;
 
-import ast.*;
+import ast.Definition;
 import ast.Expression.*;
-import ast.Type.*;
 import ast.Statement.*;
+import ast.Type.*;
+import ast.FunctionDefinition;
+import ast.Program;
+import ast.VariableDefinition;
 
 public abstract class AbstractVisitor<TP,TR> implements Visitor<TP,TR>{
 

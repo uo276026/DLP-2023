@@ -1,39 +1,28 @@
-# Global variables
-i: int;
-r: double;
-c: char;
+	c: char;
+    i: int;
+    r: double;
 
-# Functions
-def f(pi:int, pr:double): int {
-  lr:double;
-  li:int;
+    def main(): {
+    	a, i:int;
 
-  li = pi;
-  lr = pr;
-  return pi;
-}
+    	c='a';
+    	print c,'\n';
 
-# Functions
-def gfdsj(pi:int, pr:double): int {
-  lr:double;
-  li:int;
+    	a=1;
+    	i=(int)'0'*3;
+    	print a, ' ', i, '\n';
 
-  li = pi;
-  lr = pr;
-  return pi;
-}
+    	input r;
+    	print (double)2*r, '\n';
 
-# Main program
-def main(): {
-  pair: struct {
-    integer:int;
-    character:char;
-  };
-
-  i = 3;
-  c = 'a';
-  r = 3.8;
-  pair.integer = i;
-  pair.character = c;
-  f(i, r);
-}
+    	print (double)3-4.5, ' ',
+                (double)'0'/48.0, ' ',
+                (int)'0'%(int)'1', ' ',
+                0+(int)'1', '\n';
+    	print 1<2, ' ',
+    	      4>=3, ' ',
+    	      5==5, ' ',
+    	      1&&2, ' ',
+    	      0||3, ' ',
+    	      !0, '\n';
+    }

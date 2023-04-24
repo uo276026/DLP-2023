@@ -1,6 +1,5 @@
 package ast.Type;
 
-import ast.ASTNode;
 import ast.Expression.StructField;
 import visitor.Visitor;
 

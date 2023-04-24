@@ -7,6 +7,7 @@ import java.util.List;
 public interface Type extends ASTNode {
 
     int numberOfBytes();
+    public String suffix();
 
     Type arithmetic(Type other, int line, int column);
     Type squareBrackets(Type other, int line, int column);

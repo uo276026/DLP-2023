@@ -1,6 +1,6 @@
 package ast.Expression;
 
-import ast.Type.*;
+import ast.Type.Type;
 
 public abstract class AbstractExpression implements Expression {
     public boolean lvalue;

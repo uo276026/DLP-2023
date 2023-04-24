@@ -1,6 +1,5 @@
 package ast.Type;
 
-import ast.Type.Type;
 import visitor.Visitor;
 
 public class VoidType extends AbstractType {

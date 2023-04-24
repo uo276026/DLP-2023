@@ -28,7 +28,7 @@ main returns [Definition ast, List<Statement> statements = new ArrayList<Stateme
                  catch(NullPointerException e){} } )*
             (statement { try { for(int i = 0; i < $statement.ast.size(); i++)
             { $statements.add($statement.ast.get(i));}} catch(NullPointerException e){} } )* '}'
-            { $ast= new FunctionDefinition($statements.get(0).getLine(), $statements.get(0).getColumn(), "main", $statements,
+            { $ast= new FunctionDefinition($start.getLine(), $start.getCharPositionInLine()+1, "main", $statements,
                      new FunctionType($statements.get(0).getLine(), $statements.get(0).getColumn(),
                      new VoidType(), new ArrayList<VariableDefinition>())); }
     ;
@@ -188,7 +188,7 @@ statement returns [List<Statement> ast = new ArrayList<Statement>(), List<Expres
 
 expresiones_coma returns [List<Expression> ast = new ArrayList<Expression>()]:
     expression { $ast.add($expression.ast); }
-    | expression ',' expresiones_coma { $expresiones_coma.ast.add($expression.ast); $ast = $expresiones_coma.ast; }
+    | exps=expresiones_coma ',' expression  { $exps.ast.add($expression.ast); $ast = $exps.ast; }
     ;
 
 

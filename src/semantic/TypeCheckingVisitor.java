@@ -1,10 +1,10 @@
 package semantic;
 
-import ast.*;
 import ast.Expression.*;
-import ast.Type.*;
-import visitor.AbstractVisitor;
 import ast.Statement.*;
+import ast.Type.*;
+import ast.FunctionDefinition;
+import visitor.AbstractVisitor;
 
 import java.util.List;
 import java.util.stream.Collectors;

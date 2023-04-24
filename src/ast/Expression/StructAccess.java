@@ -1,7 +1,6 @@
 package ast.Expression;
 
 import ast.ASTNode;
-import ast.Expression.Expression;
 import visitor.Visitor;
 
 public class StructAccess extends AbstractExpression implements ASTNode, Expression {

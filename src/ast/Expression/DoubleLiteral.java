@@ -1,8 +1,5 @@
 package ast.Expression;
 
-import ast.Type.DoubleType;
-import ast.Type.IntType;
-import ast.Type.Type;
 import visitor.Visitor;
 
 public class DoubleLiteral extends AbstractExpression implements Expression{

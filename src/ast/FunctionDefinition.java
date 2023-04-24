@@ -1,8 +1,10 @@
 package ast;
 
-import ast.Type.*;
-import ast.Statement.*;
-import ast.Expression.*;
+import ast.Expression.AbstractExpression;
+import ast.Expression.Expression;
+import ast.Statement.Statement;
+import ast.Type.FunctionType;
+import ast.Type.Type;
 import visitor.Visitor;
 
 import java.util.List;
@@ -63,4 +65,5 @@ public class FunctionDefinition extends AbstractExpression implements Definition
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP p) {
         return v.visit(this,p);
     }
+
 }

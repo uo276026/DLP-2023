@@ -1,9 +1,11 @@
 package visitor;
 
-import ast.*;
 import ast.Expression.*;
-import ast.Type.*;
 import ast.Statement.*;
+import ast.Type.*;
+import ast.FunctionDefinition;
+import ast.Program;
+import ast.VariableDefinition;
 
 public interface Visitor<TP,TR> {
 

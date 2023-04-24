@@ -1,6 +1,5 @@
 package ast.Expression;
 
-import ast.Expression.Expression;
 import visitor.Visitor;
 
 public class UnaryNot extends AbstractExpression implements Expression {

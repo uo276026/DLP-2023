@@ -1,10 +1,12 @@
 package semantic;
-import ast.*;
+import ast.Definition;
 import ast.Expression.Variable;
+import ast.FunctionDefinition;
 import ast.Statement.Statement;
+import ast.Type.ErrorType;
+import ast.VariableDefinition;
 import visitor.AbstractVisitor;
 import symboltable.SymbolTable;
-import ast.Type.*;
 
 public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 

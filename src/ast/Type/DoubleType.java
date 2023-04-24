@@ -59,4 +59,14 @@ public class DoubleType extends AbstractType {
         return 4;
     }
 
+    @Override
+    public String toString(){
+        return "real";
+    }
+
+    @Override
+    public String suffix(){
+        return "f";
+    }
+
 }

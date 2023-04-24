@@ -1,6 +1,5 @@
 package ast.Type;
 
-import ast.ASTNode;
 import visitor.Visitor;
 
 public class CharType extends AbstractType {
@@ -55,4 +54,14 @@ public class CharType extends AbstractType {
         return new IntType(line, column);
     }
 
+
+    @Override
+    public String toString(){
+        return "char";
+    }
+
+    @Override
+    public String suffix(){
+        return "b";
+    }
 }

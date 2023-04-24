@@ -1,8 +1,6 @@
 package ast.Expression;
 
 import ast.Definition;
-import ast.Expression.Expression;
-import ast.Type.Type;
 import visitor.Visitor;
 
 public class Variable extends AbstractExpression {

@@ -1,11 +1,13 @@
 package ast.Type;
 
-import ast.ASTNode;
-import visitor.Visitor;
-
 import java.util.List;
 
 public abstract class AbstractType implements Type{
+
+    @Override
+    public String suffix(){
+        return "";
+    }
 
     @Override
     public Type arithmetic(Type other, int line, int column) {
