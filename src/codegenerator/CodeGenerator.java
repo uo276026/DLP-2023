@@ -1,13 +1,8 @@
 package codegenerator;
 
-import ast.Definition;
-import ast.Type.CharType;
-import ast.Type.DoubleType;
 import ast.Type.ErrorType;
 import ast.Type.Type;
 import ast.VariableDefinition;
-import com.sun.jdi.IntegerType;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;

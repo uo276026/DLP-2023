@@ -2,7 +2,6 @@ package ast.Type;
 
 import ast.VariableDefinition;
 import visitor.Visitor;
-
 import java.util.List;
 
 public class FunctionType extends AbstractType {
