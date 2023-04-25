@@ -19,7 +19,7 @@ public class CodeGenerator {
     public CodeGenerator(String outFileName, String inFileName){
         try {
             out = new PrintWriter(new File(outFileName));
-            out.println("\n#source '"+inFileName+"'\n");
+            out.println("\n#source "+'\u0022'+inFileName+'\u0022'+"\n");
         } catch (FileNotFoundException e) {
             new ErrorType(0,0,"Error: Output file doesn´t exist");
         }

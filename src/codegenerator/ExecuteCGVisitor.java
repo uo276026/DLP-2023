@@ -45,7 +45,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
     @Override
     public Void visit(FunctionDefinition f, Void p) {
         codeGenerator.printLine(f.getLine());
-        codeGenerator.printString("\n"+f.getName());
+        codeGenerator.printString("\n"+f.getName()+":");
         f.getFunctionType().accept(this,p);
 
         codeGenerator.printString("\t\t' * Local variables");

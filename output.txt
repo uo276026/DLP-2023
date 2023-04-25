@@ -1,5 +1,5 @@
 
-#source 'small-input.txt'
+#source "small-input.txt"
 
 		' * char c (offset 0)
 		' * int i (offset 1)
@@ -12,7 +12,7 @@ halt
 
 #line	5
 
-main
+main:
 		' * Parameters
 		' * Local variables
 		' * int a (offset -2)
