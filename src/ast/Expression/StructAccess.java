@@ -16,6 +16,9 @@ public class StructAccess extends AbstractExpression implements ASTNode, Express
         this.expression=expression;
     }
 
+    public String getName(){
+        return name;
+    }
 
     @Override
     public int getLine() {

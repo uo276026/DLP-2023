@@ -4,8 +4,8 @@ import ast.ASTNode;
 import visitor.Visitor;
 
 public class ArrayAccess extends AbstractExpression implements ASTNode, Expression {
-    public Expression name;
-    public Expression value;
+    public Expression name; //a              //a[b]
+    public Expression value; //b
     public int line, column;
 
     public ArrayAccess(int line, int column, Expression value, Expression name) {

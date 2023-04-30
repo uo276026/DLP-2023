@@ -45,5 +45,9 @@ public class ArrayType extends AbstractType {
         return super.arithmetic(other, line, column);
     }
 
+    @Override
+    public String toString(){
+        return "ArrayType[of:"+type.toString()+",size:"+size+"]";
+    }
 
 }

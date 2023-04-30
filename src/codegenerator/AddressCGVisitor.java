@@ -2,7 +2,10 @@ package codegenerator;
 
 import ast.Expression.ArrayAccess;
 import ast.Expression.StructAccess;
+import ast.Expression.StructField;
 import ast.Expression.Variable;
+import ast.Type.IntType;
+import ast.Type.StructType;
 import ast.VariableDefinition;
 
 public class AddressCGVisitor extends AbstractCGVisitor<Void, Void>{
@@ -13,8 +16,8 @@ public class AddressCGVisitor extends AbstractCGVisitor<Void, Void>{
         super(codeGenerator);
     }
 
-    public void setValueVisitor( ValueCGVisitor valueCGVisitor ) {
-        this.valueCGVisitor = valueCGVisitor;
+    public void setValueCGVisitor(ValueCGVisitor valueCGVisitor){
+        this.valueCGVisitor=valueCGVisitor;
     }
 
     /**
@@ -35,60 +38,44 @@ public class AddressCGVisitor extends AbstractCGVisitor<Void, Void>{
         } else {
             codeGenerator.pushBP();
             codeGenerator.push(varDef.getOffSet());
-            codeGenerator.add(v.getType());
+            codeGenerator.add(IntType.getInstance());
         }
         return null;
     }
 
     /**
-     * address[[StructAccess sa -> exp ID]]() =
-     *      address[[exp]]
-     *      push exp.type.numberOfBytes()
-     *      mul exp.type.suffix
-     *      add exp.type.suffix
+     * address[[StructAccess exp1 -> exp2 ID]]() =
+     *      address[[exp2]]
+     *      push exp2.getField(exp1.fieldName).offset
+     *      addi
      */
     @Override
     public Void visit(StructAccess sa, Void p) {
         sa.expression.accept(this,p);
-        codeGenerator.push(sa.getType().numberOfBytes());
-        codeGenerator.mul(sa.getType());
-        codeGenerator.add(sa.getType());
+        StructType structType = (StructType) sa.expression.getType();
+        StructField sf = structType.getField(sa.getName());
+        codeGenerator.push(sf.getOffSet());
+        codeGenerator.add(IntType.getInstance());
         return null;
     }
 
     /**
-     * address[[ArrayAccess e -> exp1 exp2]]() =
-     *      address[[exp1]]
+     * address[[ArrayAccess e -> exp2 exp3]]() =
      *      address[[exp2]]
+     *      value[[exp3]]
      *      push e.type.numberOfBytes()
      *      mul e.type.suffix
      *      add e.type.suffix
      */
     @Override
     public Void visit(ArrayAccess e, Void p) {
-        e.value.accept(this,p);
         e.name.accept(this,p);
+        e.value.accept(valueCGVisitor,p);
         codeGenerator.push(e.getType().numberOfBytes());
-        codeGenerator.mul(e.getType());
-        codeGenerator.add(e.getType());
+        codeGenerator.mul(IntType.getInstance());
+        codeGenerator.add(IntType.getInstance());
         return null;
     }
-
-//    /**
-//     * address[[Print a -> exp]]() =
-//     *
-//     *      address[[exp1]]
-//     *      address[[exp2]]
-//     *      push e.type.numberOfBytes()
-//     *      mul e.type.suffix
-//     *      add e.type.suffix
-//     */
-//    @Override
-//    public Void visit(Print a, Void p) {
-//        codeGenerator.printString("\t\t' * Write");
-//        a.expression.accept(this,p);
-//        return null;
-//    }
 
 
 

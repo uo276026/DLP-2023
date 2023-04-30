@@ -1,228 +1,410 @@
 
 #source "small-input.txt"
 
-		' * char c (offset 0)
-		' * int i (offset 1)
-		' * real r (offset 3)
+		' * ArrayType[of:RealType,size:10] v (offset 0)
 
 ' Invocation to the main function
 call main
 halt
 
 
-#line	5
+#line	4
 
-main:
+ main:
 		' * Parameters
 		' * Local variables
-		' * int a (offset -2)
-		' * int i (offset -4)
-		enter	4
-
-#line	8
-		' * Assignment
-		pusha	0
-		pushb	97
-		storeb
-
-#line	9
-		' * Write
-		pusha	0
-		loadb
-		outb
-
-#line	9
-		' * Write
-		pushb	10
-		outb
-
-#line	11
-		' * Assignment
-		push	bp
-		pushi	-2
-		addi
-		pushi	1
-		storei
+		' * RealType value (offset -4)
+		' * IntType i (offset -6)
+		' * IntType j (offset -8)
+		' * ArrayType[of:ArrayType[of:IntType,size:5],size:4] w (offset -48)
+		' * RecordType[fields:[Field[name:day,type:IntType offset:0], Field[name:month,type:IntType offset:2], Field[name:year,type:IntType offset:4]]] date (offset -54)
+		enter	54
 
 #line	12
-		' * Assignment
+		' * Read
 		push	bp
-		pushi	-4
+		pushi	-54
 		addi
-		pushb	48
-		b2i
-		pushi	3
-		muli
+		pushi	0
+		addi
+		ini
 		storei
 
 #line	13
+		' * Assignment
+		push	bp
+		pushi	-54
+		addi
+		pushi	4
+		addi
+		pushb	97
+		b2i
+		storei
+
+#line	14
+		' * Assignment
+		push	bp
+		pushi	-54
+		addi
+		pushi	2
+		addi
+		push	bp
+		pushi	-54
+		addi
+		pushi	0
+		addi
+		loadi
+		push	bp
+		pushi	-54
+		addi
+		pushi	4
+		addi
+		loadi
+		muli
+		pushi	12
+		modi
+		pushi	1
+		addi
+		storei
+
+#line	15
 		' * Write
 		push	bp
-		pushi	-2
+		pushi	-54
+		addi
+		pushi	0
 		addi
 		loadi
 		outi
 
-#line	13
-		' * Write
-		pushb	32
-		outb
-
-#line	13
-		' * Write
-		push	bp
-		pushi	-4
-		addi
-		loadi
-		outi
-
-#line	13
+#line	15
 		' * Write
 		pushb	10
 		outb
 
 #line	15
+		' * Write
+		push	bp
+		pushi	-54
+		addi
+		pushi	2
+		addi
+		loadi
+		outi
+
+#line	15
+		' * Write
+		pushb	10
+		outb
+
+#line	15
+		' * Write
+		push	bp
+		pushi	-54
+		addi
+		pushi	4
+		addi
+		loadi
+		i2f
+		outf
+
+#line	15
+		' * Write
+		pushb	10
+		outb
+
+#line	17
 		' * Read
-		pusha	3
+		push	bp
+		pushi	-4
+		addi
 		inf
 		storef
 
-#line	16
-		' * Write
-		pushi	2
-		i2f
-		pusha	3
-		loadf
-		mulf
-		outf
-
-#line	16
-		' * Write
-		pushb	10
-		outb
-
-#line	18
-		' * Write
-		pushi	3
-		i2f
-		pushf	4.5
-		subf
-		outf
-
-#line	18
-		' * Write
-		pushb	32
-		outb
-
 #line	19
-		' * Write
-		pushb	48
-		b2i
-		i2f
-		pushf	48.0
-		divf
-		outf
-
-#line	19
-		' * Write
-		pushb	32
-		outb
-
-#line	20
-		' * Write
-		pushb	48
-		b2i
-		pushb	49
-		b2i
-		modi
-		outi
-
-#line	20
-		' * Write
-		pushb	32
-		outb
-
-#line	21
-		' * Write
-		pushi	0
-		pushb	49
-		b2i
+		' * Assignment
+		push	bp
+		pushi	-6
 		addi
-		outi
+		pushi	0
+		storei
+
+#line	20
+		' * While
+
+#line	20
+ label 0 :
+		push	bp
+		pushi	-6
+		addi
+		loadi
+		pushi	10
+		lti
+		jz	label1
+		' * While body
 
 #line	21
-		' * Write
-		pushb	10
-		outb
-
-#line	22
-		' * Write
-		pushi	1
-		pushi	2
-		lti
-		outi
-
-#line	22
-		' * Write
-		pushb	32
-		outb
-
-#line	23
-		' * Write
+		' * Assignment
+		pusha	0
+		push	bp
+		pushi	-6
+		addi
+		loadi
 		pushi	4
-		pushi	3
-		gei
+		muli
+		addi
+		push	bp
+		pushi	-4
+		addi
+		loadf
+		storef
+
+#line	22
+		' * Write
+		push	bp
+		pushi	-6
+		addi
+		loadi
 		outi
+
+#line	22
+		' * Write
+		pushb	58
+		outb
+
+#line	22
+		' * Write
+		pusha	0
+		push	bp
+		pushi	-6
+		addi
+		loadi
+		pushi	4
+		muli
+		addi
+		loadf
+		outf
+
+#line	22
+		' * Write
+		pushb	32
+		outb
 
 #line	23
-		' * Write
-		pushb	32
-		outb
+		' * If
 
-#line	24
-		' * Write
-		pushi	5
-		pushi	5
-		eqi
-		outi
-
-#line	24
-		' * Write
-		pushb	32
-		outb
-
-#line	25
-		' * Write
-		pushi	1
+#line	23
+		push	bp
+		pushi	-6
+		addi
+		loadi
 		pushi	2
-		and
-		outi
+		modi
+		jz	label2
+		' * if body
 
-#line	25
+#line	24
 		' * Write
-		pushb	32
+		pushb	111
 		outb
 
-#line	26
+#line	24
 		' * Write
-		pushi	0
-		pushi	3
-		or
-		outi
-
-#line	26
-		' * Write
-		pushb	32
+		pushb	100
 		outb
 
-#line	27
+#line	24
 		' * Write
-		pushi	0
-		not
-		outi
+		pushb	100
+		outb
 
-#line	27
+#line	24
 		' * Write
 		pushb	10
 		outb
-		ret	0, 4, 0
+		jmp	label3
+ label 2 :
+		' * else body
+
+#line	26
+		' * Write
+		pushb	101
+		outb
+
+#line	26
+		' * Write
+		pushb	118
+		outb
+
+#line	26
+		' * Write
+		pushb	101
+		outb
+
+#line	26
+		' * Write
+		pushb	110
+		outb
+
+#line	26
+		' * Write
+		pushb	10
+		outb
+ label 3 :
+
+#line	27
+		' * Assignment
+		push	bp
+		pushi	-6
+		addi
+		push	bp
+		pushi	-6
+		addi
+		loadi
+		pushi	1
+		addi
+		storei
+		jmp	label0
+ label 1 :
+
+#line	29
+		' * Write
+		pushb	10
+		outb
+
+#line	31
+		' * Assignment
+		push	bp
+		pushi	-6
+		addi
+		pushi	0
+		storei
+
+#line	32
+		' * While
+
+#line	32
+ label 4 :
+		push	bp
+		pushi	-6
+		addi
+		loadi
+		pushi	4
+		lti
+		jz	label5
+		' * While body
+
+#line	33
+		' * Assignment
+		push	bp
+		pushi	-8
+		addi
+		pushi	0
+		storei
+
+#line	34
+		' * While
+
+#line	34
+ label 6 :
+		push	bp
+		pushi	-8
+		addi
+		loadi
+		pushi	5
+		lti
+		jz	label7
+		' * While body
+
+#line	35
+		' * Assignment
+		push	bp
+		pushi	-48
+		addi
+		push	bp
+		pushi	-6
+		addi
+		loadi
+		pushi	10
+		muli
+		addi
+		push	bp
+		pushi	-8
+		addi
+		loadi
+		pushi	2
+		muli
+		addi
+		push	bp
+		pushi	-6
+		addi
+		loadi
+		push	bp
+		pushi	-8
+		addi
+		loadi
+		addi
+		storei
+
+#line	36
+		' * Write
+		push	bp
+		pushi	-48
+		addi
+		push	bp
+		pushi	-6
+		addi
+		loadi
+		pushi	10
+		muli
+		addi
+		push	bp
+		pushi	-8
+		addi
+		loadi
+		pushi	2
+		muli
+		addi
+		loadi
+		outi
+
+#line	36
+		' * Write
+		pushb	32
+		outb
+
+#line	37
+		' * Assignment
+		push	bp
+		pushi	-8
+		addi
+		push	bp
+		pushi	-8
+		addi
+		loadi
+		pushi	1
+		addi
+		storei
+		jmp	label6
+ label 7 :
+
+#line	39
+		' * Write
+		pushb	10
+		outb
+
+#line	40
+		' * Assignment
+		push	bp
+		pushi	-6
+		addi
+		push	bp
+		pushi	-6
+		addi
+		loadi
+		pushi	1
+		addi
+		storei
+		jmp	label4
+ label 5 :
+		ret	0, 54, 0

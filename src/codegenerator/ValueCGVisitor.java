@@ -132,4 +132,28 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void>{
         return null;
     }
 
+    /**
+     * value[[ArrayAccess a -> value name]]() =
+     *      address[[a]]()
+     *      load a.type.suffix()
+     */
+    @Override
+    public Void visit(ArrayAccess a, Void p){
+        a.accept(addressCGVisitor, p);
+        codeGenerator.load(a.getType());
+        return null;
+    }
+
+    /**
+     * value[[StructAccess exp1 -> exp2 ID]]() =
+     *      address[[exp1]]()
+     *      load exp1.type.suffix()
+     */
+    @Override
+    public Void visit(StructAccess a, Void p){
+        a.accept(addressCGVisitor, p);
+        codeGenerator.load(a.getType());
+        return null;
+    }
+
 }

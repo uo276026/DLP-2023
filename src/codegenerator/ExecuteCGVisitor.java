@@ -3,10 +3,7 @@ package codegenerator;
 import ast.Definition;
 import ast.FunctionDefinition;
 import ast.Program;
-import ast.Statement.Assignment;
-import ast.Statement.Input;
-import ast.Statement.Print;
-import ast.Statement.Statement;
+import ast.Statement.*;
 import ast.Type.FunctionType;
 import ast.Type.Type;
 import ast.Type.VoidType;
@@ -21,6 +18,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
         super(codeGenerator);
         addressCGVisitor= new AddressCGVisitor(codeGenerator);
         valueCGVisitor=new ValueCGVisitor(codeGenerator, addressCGVisitor);
+        addressCGVisitor.setValueCGVisitor(valueCGVisitor);
     }
 
     /**
@@ -59,12 +57,12 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
         codeGenerator.call(f.getName());
         codeGenerator.halt();
         codeGenerator.printLine(f.getLine());
-        codeGenerator.printString("\n"+f.getName()+":");
+        codeGenerator.printString("\n "+f.getName()+":");
 
-        codeGenerator.printString("\t\t' * Parameters");
+        codeGenerator.printTitle("Parameters");
         f.getFunctionType().accept(this,p);
 
-        codeGenerator.printString("\t\t' * Local variables");
+        codeGenerator.printTitle("Local variables");
         int localBytes=0;
         for (Statement s : f.statements) {
             if (s instanceof VariableDefinition) {
@@ -115,7 +113,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
      */
     @Override
     public Void visit(Assignment a, Void p) {
-        codeGenerator.printString("\t\t' * Assignment");
+        codeGenerator.printTitle("Assignment");
         a.expression1.accept(addressCGVisitor, p);
         a.expression2.accept(valueCGVisitor, p);
         codeGenerator.store(a.expression1.getType());
@@ -131,7 +129,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
      */
     @Override
     public Void visit(Print print, Void p) {
-        codeGenerator.printString("\t\t' * Write");
+        codeGenerator.printTitle("Write");
         print.expression.accept(valueCGVisitor, p);
         codeGenerator.out(print.expression.getType());
         return null;
@@ -146,10 +144,77 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void>{
      */
     @Override
     public Void visit(Input input, Void p) {
-        codeGenerator.printString("\t\t' * Read");
+        codeGenerator.printTitle("Read");
         input.expression.accept(addressCGVisitor, p);
         codeGenerator.in(input.expression.getType());
         codeGenerator.store(input.expression.getType());
+        return null;
+    }
+
+    /**
+     *  execute[[Iterative: statement → exp statement*]] =
+     *      int labelNumber = cg.getLabels(2);
+     *      label labelNumber :
+     *      value[[exp]]
+     *      jz label labelNumber+1
+     *      statement*.foreach(stmt -> execute[[stmt]])
+     *      jmp label labelNumber
+     *      label labelNumber +1
+     */
+    public Void visit(Iterative i, Void p){
+        codeGenerator.printTitle("While");
+        codeGenerator.printLine(i.getLine());
+        int condition = codeGenerator.getLabel();
+        int end = codeGenerator.getLabel();
+        codeGenerator.printLabel(condition);
+        i.expression.accept(valueCGVisitor, p);
+        codeGenerator.jz(end);
+
+        codeGenerator.printTitle("While body");
+        for(Statement s: i.whileBody) {
+            codeGenerator.printLine(s.getLine());
+            s.accept(this, p);
+        }
+
+        codeGenerator.jmp(condition);
+        codeGenerator.printLabel(end);
+        return null;
+    }
+
+    /**
+     * execute[[IfStatement: statement1 → exp statement2+ statement3*]] =
+     *      int labelNumber = cg.getLabels(2);
+     *      value[[exp]]
+     *      jz label labelNumber
+     *      statement2+.foreach(stmt -> execute[[stmt]])
+     *      jmp label labelNumber+1
+     *      label labelNumber :
+     *      statement3*.foreach(stmt -> execute[[stmt]])
+     *      label labelNumber+1 :
+     */
+    public Void visit(Conditional c, Void p){
+        codeGenerator.printTitle("If");
+        codeGenerator.printLine(c.getLine());
+
+        int labelNumber=codeGenerator.getLabel();
+        int labelNumber2=codeGenerator.getLabel();
+        c.expression.accept(valueCGVisitor,p);
+        codeGenerator.jz(labelNumber);
+
+        codeGenerator.printTitle("if body");
+        for(Statement s:c.ifBody) {
+            codeGenerator.printLine(s.getLine());
+            s.accept(this, p);
+        }
+        codeGenerator.jmp(labelNumber2);
+        codeGenerator.printLabel(labelNumber);
+
+        codeGenerator.printTitle("else body");
+        for(Statement s:c.elseBody) {
+            codeGenerator.printLine(s.getLine());
+            s.accept(this, p);
+        }
+        codeGenerator.printLabel(labelNumber2);
         return null;
     }
 

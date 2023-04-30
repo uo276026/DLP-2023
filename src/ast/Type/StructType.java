@@ -50,4 +50,27 @@ public class StructType extends AbstractType {
                 "Variable '"+name+"' doesn't exist in Struct");
     }
 
+    public StructField getField(String fieldName){
+        for(StructField sf:fields){
+            if(sf.getName().equals(fieldName))
+                return sf;
+        }
+        return null;
+    }
+
+    @Override
+    public String toString(){
+        //RecordType[fields:[Field[name:day,type:IntType offset:0], Field[name:month,type:IntType offset:2], Field[name:year,type:IntType offset:4]]] date (offset -54)
+        String str = "RecordType[fields:[";
+        for(int i=0;i<= fields.size()-1;i++){
+            StructField field= fields.get(i);
+            str+="Field[name:"+field.getName()+",type:"+field.type+" offset:"+field.getOffSet()+"]";
+            if(i!=fields.size()-1)
+                str+=", ";
+
+        }
+        str+="]]";
+        return str;
+    }
+
 }

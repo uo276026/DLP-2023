@@ -6,9 +6,21 @@ public class IntType extends AbstractType {
 
     public int line, column;
 
+    private static IntType instance;
+
     public IntType(int line, int column){
         this.line=line;
         this.column=column;
+    }
+
+    public IntType(){
+    }
+
+    static public IntType getInstance(){
+        if(instance== null)
+            instance=new IntType();
+        return instance;
+
     }
 
     @Override
@@ -64,7 +76,7 @@ public class IntType extends AbstractType {
 
     @Override
     public String toString(){
-        return "int";
+        return "IntType";
     }
 
     @Override

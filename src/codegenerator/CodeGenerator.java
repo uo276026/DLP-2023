@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 public class CodeGenerator {
 
     private PrintWriter out;
+    private int labels=0;
 
     public CodeGenerator(String outFileName, String inFileName){
         try {
@@ -40,7 +41,6 @@ public class CodeGenerator {
         out.println("\t\tpushf\t"+d);
         out.flush();
     }
-
 
     //direccion
     public void pusha(int offSet) {
@@ -78,10 +78,12 @@ public class CodeGenerator {
         out.flush();
     }
 
+
     public void mod(Type type) {
         out.println("\t\tmod"+type.suffix());
         out.flush();
     }
+
 
     public void call(String name) {
         out.println("\n' Invocation to the "+ name +" function");
@@ -96,6 +98,11 @@ public class CodeGenerator {
 
     public void varDefinition(VariableDefinition d) {
         out.println("\t\t' * "+d.getType().toString()+" "+d.getName()+" (offset "+d.getOffSet()+")");
+        out.flush();
+    }
+
+    public void printTitle(String str) {
+        out.println("\t\t' * "+str);
         out.flush();
     }
 
@@ -206,4 +213,27 @@ public class CodeGenerator {
         out.println("\t\tret\t"+returnBytes+", "+localBytes+", "+paramBytes);
         out.flush();
     }
+
+    public void printLabel(int label) {
+        out.println(" label"+label+" :");
+        out.flush();
+    }
+
+    public int getLabel() {
+        int temp = this.labels;
+        this.labels+=1;
+        return temp;
+    }
+
+    public void jz(int labelNumber) {
+        out.println("\t\tjz\tlabel"+labelNumber);
+        out.flush();
+    }
+
+    public void jmp(int labelNumber) {
+        out.println("\t\tjmp\tlabel"+labelNumber);
+        out.flush();
+    }
+
+
 }

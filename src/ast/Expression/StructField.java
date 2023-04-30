@@ -44,4 +44,5 @@ public class StructField extends AbstractExpression implements ASTNode {
     public void setOffSet(int offset) {
         this.offset=offset;
     }
+
 }
