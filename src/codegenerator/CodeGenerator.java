@@ -15,7 +15,7 @@ public class CodeGenerator {
     public CodeGenerator(String outFileName, String inFileName){
         try {
             out = new PrintWriter(new File(outFileName));
-            out.println("\n#source "+'\u0022'+inFileName+'\u0022'+"\n");
+            out.println("\n#source\t"+'\u0022'+inFileName+'\u0022'+"\n");
         } catch (FileNotFoundException e) {
             new ErrorType(0,0,"Error: Output file doesn´t exist");
         }
@@ -23,71 +23,84 @@ public class CodeGenerator {
     }
 
     public void pushBP(){
-        out.println("\t\tpush\tbp");
+        out.println("\tpush\tbp");
+        out.flush();
+    }
+
+    public void pop(Type type) {
+        out.println("\tpop"+type.suffix());
         out.flush();
     }
 
     public void push(char c){
-        out.println("\t\tpushb\t"+(int)c);
+        out.println("\tpushb\t"+(int)c);
         out.flush();
     }
 
     public void push(int i){
-        out.println("\t\tpushi\t"+i);
+        out.println("\tpushi\t"+i);
         out.flush();
     }
 
     public void push(double d){
-        out.println("\t\tpushf\t"+d);
+        out.println("\tpushf\t"+d);
         out.flush();
     }
 
     //direccion
     public void pusha(int offSet) {
-        out.println("\t\tpusha\t"+offSet);
+        out.println("\tpusha\t"+offSet);
         out.flush();
     }
 
     public void load(Type type) {
-        out.println("\t\tload"+type.suffix());
+        out.println("\tload"+type.suffix());
         out.flush();
     }
 
     public void store(Type type) {
-        out.println("\t\tstore"+type.suffix());
+        out.println("\tstore"+type.suffix());
         out.flush();
     }
 
     public void mul(Type type) {
-        out.println("\t\tmul"+type.suffix());
+        out.println("\tmul"+type.suffix());
         out.flush();
     }
 
     public void sub(Type type) {
-        out.println("\t\tsub"+type.suffix());
+        out.println("\tsub"+type.suffix());
         out.flush();
     }
 
     public void div(Type type) {
-        out.println("\t\tdiv"+type.suffix());
+        out.println("\tdiv"+type.suffix());
         out.flush();
     }
 
     public void add(Type type) {
-        out.println("\t\tadd"+type.suffix());
+        out.println("\tadd"+type.suffix());
         out.flush();
     }
 
 
     public void mod(Type type) {
-        out.println("\t\tmod"+type.suffix());
+        out.println("\tmod"+type.suffix());
         out.flush();
     }
 
+    public void mainInvocationComment(){
+        out.println("\n' Invocation to the main function");
+        out.flush();
+    }
 
     public void call(String name) {
-        out.println("\n' Invocation to the "+ name +" function");
-        out.println("call "+name);
+        out.println("\tcall\t"+name);
+        out.flush();
+    }
+
+    public void callMain(){
+        out.println("call main");
         out.flush();
     }
 
@@ -97,12 +110,12 @@ public class CodeGenerator {
     }
 
     public void varDefinition(VariableDefinition d) {
-        out.println("\t\t' * "+d.getType().toString()+" "+d.getName()+" (offset "+d.getOffSet()+")");
+        out.println("\t' * "+d.getType().toString()+" "+d.getName()+" (offset "+d.getOffSet()+")");
         out.flush();
     }
 
     public void printTitle(String str) {
-        out.println("\t\t' * "+str);
+        out.println("\t' * "+str);
         out.flush();
     }
 
@@ -118,30 +131,30 @@ public class CodeGenerator {
 
 
     public void enter(int i) {
-        out.println("\t\tenter\t"+i);
+        out.println("\tenter\t"+i);
         out.flush();
     }
 
     public void out(Type type) {
-        out.println("\t\tout"+type.suffix());
+        out.println("\tout"+type.suffix());
         out.flush();
     }
 
     public void in(Type type) {
-        out.println("\t\tin"+type.suffix());
+        out.println("\tin"+type.suffix());
         out.flush();
     }
 
     public void convert(Type type, Type typeTo) {
         if(type.suffix()!=typeTo.suffix()){
             if(type.suffix()=="f"&&typeTo.suffix()=="b"){
-                out.println("\t\tf2i");
-                out.println("\t\ti2b");
+                out.println("\tf2i");
+                out.println("\ti2b");
             } else if(type.suffix()=="b"&&typeTo.suffix()=="f"){
-                out.println("\t\tb2i");
-                out.println("\t\ti2f");
+                out.println("\tb2i");
+                out.println("\ti2f");
             } else {
-                out.println("\t\t" + type.suffix() + "2" + typeTo.suffix());
+                out.println("\t" + type.suffix() + "2" + typeTo.suffix());
             }
             out.flush();
         }
@@ -171,22 +184,22 @@ public class CodeGenerator {
     public void comparison(String operator, Type type) {
         switch(operator){
             case "==":
-                out.println("\t\teq"+type.suffix()); //equals
+                out.println("\teq"+type.suffix()); //equals
                 break;
             case "!=":
-                out.println("\t\tne"+type.suffix()); //not equals
+                out.println("\tne"+type.suffix()); //not equals
                 break;
             case "<":
-                out.println("\t\tlt"+type.suffix()); //lower than
+                out.println("\tlt"+type.suffix()); //lower than
                 break;
             case ">":
-                out.println("\t\tgt"+type.suffix()); //greater than
+                out.println("\tgt"+type.suffix()); //greater than
                 break;
             case ">=":
-                out.println("\t\tge"+type.suffix()); //greater or equals
+                out.println("\tge"+type.suffix()); //greater or equals
                 break;
             case "<=":
-                out.println("\t\tle"+type.suffix()); //lower or equals
+                out.println("\tle"+type.suffix()); //lower or equals
                 break;
         }
         out.flush();
@@ -195,27 +208,27 @@ public class CodeGenerator {
     public void logical(String operator) {
         switch(operator){
             case "&&":
-                out.println("\t\tand");
+                out.println("\tand");
                 break;
             case "||":
-                out.println("\t\tor");
+                out.println("\tor");
                 break;
         }
         out.flush();
     }
 
     public void not() {
-        out.println("\t\tnot");
+        out.println("\tnot");
         out.flush();
     }
 
     public void ret(int returnBytes, int localBytes, int paramBytes) {
-        out.println("\t\tret\t"+returnBytes+", "+localBytes+", "+paramBytes);
+        out.println("\tret\t"+returnBytes+", "+localBytes+", "+paramBytes);
         out.flush();
     }
 
     public void printLabel(int label) {
-        out.println(" label"+label+" :");
+        out.println(" label"+label+":");
         out.flush();
     }
 
@@ -226,14 +239,15 @@ public class CodeGenerator {
     }
 
     public void jz(int labelNumber) {
-        out.println("\t\tjz\tlabel"+labelNumber);
+        out.println("\tjz\tlabel"+labelNumber);
         out.flush();
     }
 
     public void jmp(int labelNumber) {
-        out.println("\t\tjmp\tlabel"+labelNumber);
+        out.println("\tjmp\tlabel"+labelNumber);
         out.flush();
     }
+
 
 
 }

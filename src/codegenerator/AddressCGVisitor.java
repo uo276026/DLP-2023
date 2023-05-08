@@ -8,7 +8,7 @@ import ast.Type.IntType;
 import ast.Type.StructType;
 import ast.VariableDefinition;
 
-public class AddressCGVisitor extends AbstractCGVisitor<Void, Void>{
+public class AddressCGVisitor extends AbstractCGVisitor<Object, Void>{
 
     public ValueCGVisitor valueCGVisitor;
 
@@ -31,7 +31,7 @@ public class AddressCGVisitor extends AbstractCGVisitor<Void, Void>{
      *      }
      */
     @Override
-    public Void visit(Variable v, Void p) {
+    public Void visit(Variable v, Object p) {
         VariableDefinition varDef= (VariableDefinition) v.def;
         if(varDef.getScope()==0){ //globales
             codeGenerator.pusha(varDef.getOffSet());
@@ -50,7 +50,7 @@ public class AddressCGVisitor extends AbstractCGVisitor<Void, Void>{
      *      addi
      */
     @Override
-    public Void visit(StructAccess sa, Void p) {
+    public Void visit(StructAccess sa, Object p) {
         sa.expression.accept(this,p);
         StructType structType = (StructType) sa.expression.getType();
         StructField sf = structType.getField(sa.getName());
@@ -68,7 +68,7 @@ public class AddressCGVisitor extends AbstractCGVisitor<Void, Void>{
      *      add e.type.suffix
      */
     @Override
-    public Void visit(ArrayAccess e, Void p) {
+    public Void visit(ArrayAccess e, Object p) {
         e.name.accept(this,p);
         e.value.accept(valueCGVisitor,p);
         codeGenerator.push(e.getType().numberOfBytes());

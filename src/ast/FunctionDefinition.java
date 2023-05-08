@@ -16,6 +16,10 @@ public class FunctionDefinition extends AbstractExpression implements Definition
     public String name;
     public int scope;
 
+    public int returnBytes;
+    public int localBytes;
+    public int paramBytes;
+
     public int line;
     public int column;
 
@@ -64,6 +68,30 @@ public class FunctionDefinition extends AbstractExpression implements Definition
     @Override
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP p) {
         return v.visit(this,p);
+    }
+
+    public void setReturnBytes(int returnBytes) {
+        this.returnBytes = returnBytes;
+    }
+
+    public void setLocalBytes(int localBytes) {
+        this.localBytes = localBytes;
+    }
+
+    public void setParamBytes(int paramBytes) {
+        this.paramBytes = paramBytes;
+    }
+
+    public int getReturnBytes() {
+        return returnBytes;
+    }
+
+    public int getLocalBytes() {
+        return localBytes;
+    }
+
+    public int getParamBytes() {
+        return paramBytes;
     }
 
 }

@@ -143,7 +143,7 @@ tipo returns [Type ast, List<StructField> fields=new ArrayList<StructField>()]:
 
 struct_fields returns [List<StructField> ast=new ArrayList<StructField>()]:
       struct_field ';' { for (int j = 0; j<$struct_field.ast.size(); j++) { $ast.add($struct_field.ast.get(j)); } }
-    | struct_field ';' fields=struct_fields { for (int j = 0; j<$struct_field.ast.size(); j++){
+    |  fields=struct_fields struct_field ';' { for (int j = 0; j<$struct_field.ast.size(); j++){
                                                 for (int i = 0; i < $fields.ast.size(); i++) {
                                                     if($struct_field.ast.get(j).getName().equals($fields.ast.get(i).getName())) {
                                                         ErrorType et = new ErrorType($struct_field.ast.get(j).getLine(), $struct_field.ast.get(j).getColumn(),
