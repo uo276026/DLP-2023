@@ -41,8 +41,6 @@ public abstract class AbstractType implements Type{
 
     @Override
     public Type comparison(Type other, int line, int column) {
-        if(other.getClass().equals(this.getClass()) || other instanceof ErrorType)
-            return other;
         return new ErrorType(line, column,
                 "ERROR in line " + line + ": Wrong type, it can't do Comparison operations");
     }

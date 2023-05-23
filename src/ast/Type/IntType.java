@@ -65,6 +65,13 @@ public class IntType extends AbstractType {
     }
 
     @Override
+    public Type comparison(Type other, int line, int column) {
+        if(other.getClass().equals(this.getClass()))
+            return new IntType(line, column);
+        return super.comparison(this, line, column);
+    }
+
+    @Override
     public Type unarynot(int line, int column) {
         return this;
     }
@@ -83,4 +90,6 @@ public class IntType extends AbstractType {
     public String suffix(){
         return "i";
     }
+
+
 }

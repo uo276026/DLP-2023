@@ -63,7 +63,6 @@ return_func_tipo returns [Type ast]:
     | { $ast = new VoidType(); } //Si no llega nada el valor de return es void
     ;
 
-
 expression returns [Expression ast]:
      REAL_CONSTANT { $ast = new DoubleLiteral( $REAL_CONSTANT.getLine(), $REAL_CONSTANT.getCharPositionInLine()+1,
                         LexerHelper.lexemeToReal($REAL_CONSTANT.text) ); }
@@ -90,6 +89,16 @@ expression returns [Expression ast]:
                                         $ex1.ast, $OP.text, $ex2.ast ); }
 
     ;
+
+
+//    expression returns [expression ast]:
+//        | id            { $ast = new variable( $id.getline(), $id.getcharpositioninline()+1, $id.text ); }
+//        | ex1=expression op='>' ex2=expression { $ast = new comparison( $ex1.ast.getline(), $ex1.ast.getcolumn(),
+//                                                                                    $ex1.ast, $op.text, $ex2.ast ); }
+//        | ex1=expression op='+' ex2=expression { $ast = new arithmetic( $ex1.ast.getline(), $ex1.ast.getcolumn(),
+//                         $ex1.ast, $op.text, $ex2.ast ); }
+//        | '-' expression  { $ast = new unaryminus($expression.ast.getline(), $expression.ast.getcolumn(), $expression.ast); }
+//        ;
 
 // f(xx)
 llamada_funcion returns [FunctionInvocation ast, List<Expression> exps = new ArrayList<Expression>()]:

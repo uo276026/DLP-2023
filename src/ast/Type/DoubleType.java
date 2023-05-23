@@ -39,7 +39,7 @@ public class DoubleType extends AbstractType {
     public Type canBeCastTo(Type other, int line, int column){
         if(other instanceof IntType || other instanceof DoubleType || other instanceof CharType || other instanceof ErrorType)
             return this;
-        return super.arithmetic(this, line, column);
+        return super.canBeCastTo(this, line, column);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class DoubleType extends AbstractType {
     public Type comparison(Type other, int line, int column) {
         if(other.getClass().equals(this.getClass()))
             return new IntType(line, column);
-        return super.arithmetic(this, line, column);
+        return super.comparison(this, line, column);
     }
 
     @Override

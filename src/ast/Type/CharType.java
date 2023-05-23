@@ -34,11 +34,11 @@ public class CharType extends AbstractType {
     @Override
     public Type arithmetic(Type other, int line, int column){
         //Si other es char, devolvemos int
-        if(other instanceof IntType)
+        if(other instanceof CharType)
             return new IntType(line, column);
-        if(other instanceof ErrorType)
+        if(other instanceof ErrorType | other instanceof IntType)
             return other;
-        //Si es double o int, debe dar error
+        //Si es double, debe dar error
         return super.arithmetic(other, line, column);
     }
 
@@ -46,7 +46,7 @@ public class CharType extends AbstractType {
     public Type canBeCastTo(Type other, int line, int column){
         if(other instanceof IntType || other instanceof DoubleType || other instanceof CharType || other instanceof ErrorType)
             return this;
-        return super.arithmetic(this, line, column);
+        return super.canBeCastTo(this, line, column);
     }
 
     @Override

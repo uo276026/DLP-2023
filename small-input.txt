@@ -3,7 +3,7 @@
 i,n,j:int;
 c:char;
 
-pair:struct { 
+pair:struct {
 	integer:int;
 	character:char;
 };
@@ -26,7 +26,7 @@ def fill(row:int, value:int, increment:int): {
 	i=0;
 	inc=increment;
 	while i<10: {
-		matrix[row][i]=value+inc; 
+		matrix[row][i]=value+inc;
 		i=i+1;
 		inc=inc+increment;
 	}
@@ -57,7 +57,7 @@ def main(): {
 	i=0;
 	j=0;
 	while i<10: {
-		fill(i, j, 1); 
+		fill(i, j, 1);
 		show(i);
 		i=i+1;
 		j=i*10;

@@ -42,7 +42,7 @@ public class ArrayType extends AbstractType {
         if(other instanceof ErrorType)
             return other;
         //Si es double o char, debe dar error
-        return super.arithmetic(other, line, column);
+        return super.squareBrackets(other, line, column);
     }
 
     @Override
