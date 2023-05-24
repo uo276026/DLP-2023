@@ -61,7 +61,7 @@ public class IntType extends AbstractType {
     public Type canBeCastTo(Type other, int line, int column){
         if(other instanceof IntType || other instanceof DoubleType || other instanceof CharType || other instanceof ErrorType)
             return this;
-        return super.arithmetic(this, line, column);
+        return super.canBeCastTo(this, line, column);
     }
 
     @Override
