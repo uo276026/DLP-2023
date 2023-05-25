@@ -1,0 +1,471 @@
+------------------- LAB1 01/02/23 -------------------
+PROGRAMA
+========
+Un programa es una secuencia de definiciones. 
+Las definiciones pueden ser de variables o de funciones.
+
+DEFINICION DE VARIABLE
+======================
+La sintaxis de la definición de una variable es una lista, con al menos un elemento, de identificadores separados por comas seguido de ':' y un tipo. 
+Las definiciones de variables terminan mediante el caracter ';'
+
+DEFINICION DE FUNCION
+======================
+Las funciones se definen mediante la palabra reservada "def" el identificador de la función, una lista de parametros separados por comas entre '(' y ')' seguido de ':' y el tipo de retorno cuando sea necesario.
+El tipo de retorno y de los parámetros debe ser de tipo simple (no se permiten ni arrays ni registros). 
+El cuerpo de la funcion va entre '{' y '}'.
+El cuerpo de las funciones se compone de una secuencias de cero o mas definiciones de variables seguida de una secuencia de cero o mas sentencias. 
+En ambos casos terminan con el caracter ';'
+La funcion "main" no devuelve nada, no recibe parámetros y obligatoriamente debe estar declarada en último lugar.
+
+TIPOS
+=====
+Los tipos simples son "int", "double" y "char".
+Los arrays se pueden crear con el constructor de tipos "[]", especificando el tamaño con una constante entera (como en C) seguido de cualquier tipo.
+Se usa el constructor de tipos "struct" para la creacion de registros: 
+s:struct { 
+	q:int;
+	r:[4]double;
+	s:struct{
+		a:char;
+	} 
+} 
+Los registros no tienen identificador, y los campos son declarados como variables dentro de '{' '}'. No se permite la definicion de tipos (p.e. typedef).
+
+SENTENCIAS
+==========
+Una escritura es la palabra reservada "print" seguida de una lista de una o mas expresiones separadas por comas.
+	print 4,a,4+5; -> "4a9"
+Una lectura es la palabra reservada "input" seguida de una lista de una o mas expresiones separadas por comas.
+Una asignación está compuesta por dos expresiones separadas por el operador '='.
+La sentencia condicional "if"-"else" y la sentencia iterativa "while" siguen la sintaxis del lenguaje Python (sin parentesis y con ':' despues de la condicion y despues de else).
+	if a<b:{
+		a=4;
+	} else:
+En ambos casos el cuerpo sigue la sintaxis de Java, las sentencias van entre '{' '}' y si solamente hay un sentencia pueden omitirse. 
+Se permite la sentencia 'return' <expresion> (la expresion es obligatoria).
+La invocación a una función sin retorno (se denomina procedimiento) será siempre una sentencia.
+	a=f();
+	f();
+
+EXPRESIONES
+===========
+La invocación a una función será una expresión cuando retorne un valor.
+La conversión explícita a tipos simples (cast) se realizará utilizando la sintaxis del lenguaje C. 
+	4+4.5 -> NO COMPILA
+	(DOUBLE)4+4.5 // 4+(INT)4.5
+Las expresiones están formadas por:
+- Constantes enteras, reales y caracter sin signo.
+- Identificadores
+- Los siguientes operadores aplicados a una o dos expresiones (por 
+orden de precedencia descendente):
+		( )			Non associative
+		[]			Non associative
+ 		.			Left associative
+        	CAST     		Non associative
+		- (unary)		Non associative
+        	!			Non associative
+		* / %			Left associative
+		+ -			Left associative
+		> >= < <= != ==		Left associative
+		&& ||			Left associative
+---------------------------------------
+		= 			Right associative
+
+(-x+5)/y*(2-x);
+QUE TOKEN NO POSEEN INFORMACION SEMANTICA : () ;
+QUE OPERADORES HAY: - + / *
+OPERANDOS: x 5 y 2
+REPRESENTACIÓN EN FORMA DE ARBOL: *en papel*
+REPRESENTACIÓN EN ORIENTACIÓN A OBJETOS:
+	
+	------VARIABLE------
+	Name:String
+	
+	------INTLITERAL----- 
+	Value:Int
+
+	------ARITMETICA------
+	Operador:String
+	(No tiene más variables, tiene tres asociaciones)
+
+	------UNARYMINUS------
+	
+GENERALIZACIÓN A UNA CLASE:
+	------EXPRESIÓN-------
+	
+Aritmetica esta compuesta de dos expresiones
+UnaryMinus esta compuesta por una operacion
+Todo HEREDA? INTERFAZ? DE EXPRESION
+
+PATRÓN COMPOSITE
+------------------------------------------------------	
+y=(-x+5)/y*(2-x);
+	
+	-----STATEMENT-------
+
+	-----ASIGNACIÓN------
+	(Hereda de Statement)
+		
+------------------- LAB2 08/02/23 -------------------	
++ -> 1 o mas
+* -> 0 o más
+? -> opcional
+. -> cualquier caracter
+| -> or
+[a,b,c] -> cualquiera de estos
+[a-z] -> desde la a a la z
+[a|z] -> reconoce la a, | y la z (NO ES A O Z)
+.*? -> cualquier cosa de cualquier longitud
+------------------- LAB3 15/02/23 -------------------
+Elementos léxicos sensibles a mayúsculas/minúsculas.
+
+Elementos:
+
+  Comentarios con # hasta el final de línea
+  Comentarios con varias líneas (de """ hasta """)
+  Identificadores { letra o _ (letra|digito|_)* }
+  Constantes Enteras sin signo (los negativos van con UnaryMinus)
+  Constantes Reales con punto decimal y formato exponente -> 
+  si hay dudas, en java crear string y pasarle un parser
+	12.3, 34.12E-3, 2., 3e3, 3E+3, 2.e3, .5
+	(NO 3e3.14)
+  Constantes carácter entre '', tiene q haber algo entre las comillas, valdria un espacio
+  Constantes carácter entre mediante codigo ASCII '\126'='~'
+  Dos caracteres especiales '\n' y '\t'
+
+  Los comentarios, espacios en blanco... los tenemos que reconocer pero ignorarlos
+----------------------------------------------------
++ -> 1 o mas
+* -> 0 o más
+? -> opcional
+. -> cualquier caracter
+| -> or
+[a,b,c] -> cualquiera de estos
+[a-z] -> desde la a a la z
+[a|z] -> reconoce la a, | y la z (NO ES A O Z)
+.*? -> cualquier cosa de cualquier longitud
+----------------------------------------------------
+INT -> [0-9]+ ESTA MAL PORQUE PERMETIRIA 0001 Y NO DEBE
+'0'|[1-9][0-9]* -> El '0' o cualquier número
+
+ANÁLISIS LÉXICO
+
+file, project settigs, modules, test, click derecho, sources
+instalar antlr v4 
+src, parser, pmmg4, click derecho, configure atlr -> src - - parser
+desmarcar generate tree listener
+
+¡¡¡¡¡--- click derecho, generate antlr = control + mayus+ g ---!!!!!
+
+arriba en main -> edit configurations -> params: small-input.txt
+
+DESCOMENTAR EN MAIN Y EN TEST.LEXER PARA PROBAR
+NO VA A DAR ERROR POR QUE HAY QUE HABILITAR LOS ASSERTOS
+lexertest -> edit configurations (arriba donde cambiamos de main) 
+	-> modify options -> add vm options -> -ea
+
+------------------- LAB4 22/02/23 -------------------	
+Probar con el input de la primera semana, añadir prints input etc....
+
+ANALISIS SINTÁCTICO
+
+GRAMÁTICA esta formada por 
+- simbolo inicial: primer no terminal
+- vocabulario terminal:
+	- tokens (WHILE="while") / palabra mayuscula o entre comillas
+	- keywords ('while')
+- vocabulario no terminal (VAN EN MINUSCULAS)
+- producción / reglas de derivación: identificadores de las reglas
+	- UNT: UI U UNT 
+
+
+program, click derecho, test rule -> interfaz para probar la gramatica
+para probar solo una regla, click derecho sobre ella (expression etc)
+
+expression '=' expression MALLLL NO ES UNA EXPRESION
+
+<assoc=right>
+
+main tiene que ser la ultima funcion
+
+TESTRIGGUI -> hace arbol de fichero completo
+TESTRIGTOKENS -> muestra todos los tokens que recibe el parser
+TESTRIGTRACE -> hace traza de lo que va consumiendo
+
+------------------- LAB5 01/03/23 -------------------	
+lib -> click derecho introspector -> add as a library
+TODAS LAS REGLAS TIENEN QUE DEVOLVER ALGO
+getLine y getCharPositionInLine ES SOLO PARA TOKENS
+TestRigGUI -> alternando con small-input.txt 
+
+
+- En Variable, intlit, doublelit, charlit falta linea y columna en constructor heredan de 
+  interfaz 
+- Falta clase Arithmetic (es de las que dio el) contructor: linea columna, dos expresiones 
+   y operador es una expression, añadir al uml  
+- mirar double int, char... porque no se como va la herencia, y getline getcolumn deberia 
+  devolver lo de la superclase o interfaz
+
+- CUIDADO CON ';', AÑADIR AL FINAL DE CADA new xxx();
+
+Se tiene que abrir ventanita al ejecutar
+LLEVAR UML ACTUALIZADO
+da igual que este algo mal pero se tiene que ver bien!!
+
+------------------- LAB8 22/03/23 -------------------	
+getScope y setScope en Definition
+Variable apunta a Definition
+Identificadores: variables, funciones, parametros...
+definition -> la metemos en la tabla
+variable -> comprobamos q esta en la tabla
+findInCurrentScope deberia ser privado, es publico para los tests -> no usar en visitor
+
+modificar ast añadir definition a Variable
+implementar identificationvisitor con la symboltable (en semantic) 
+modificar main para llamar a identificationvisitor (se llama antes q typechekingvisitor)
+probar con input y wrong.input
+
+si encontramos una variable y no esta definida, se crea un error y con ese se crea una 
+	definicion de tipo error, NO SE HACE EN LA TABLA DE SIMBOLOS
+
+------------------ LAB9 29/03/23 -------------------	
+- añadir metodos getType y setType a Expression
+- añadir metodos a Type, implementarlos donde sea necesario
+- Mod TypeCheckingVisitor para que realice inferencia y comprobacion de tipos
+
+TODOS LOS NUEVOS METODOS SON DEFINIDOS EN TYPE
+hay que pasar ASTNode por parametro en todos
+
+Comparison -> nuevo metodo Type:Comparison(Type). 
+Double con double = int		 Char con char=char	int con int=int	
+
+
+--------- done ---------
+para los Literales se calcula el tipo directamente -> IntType, DoubleType, CharType
+para las Variables -> variable.type = variable.definition.type (ta hecho a la mitad creo :()
+
+Arithmetic tiene que estar implementado en CharType, Int y Real, para el resto, return ErrorType
+char+char = int		char+int=int		
+char+double=error	int+double=error	
+int+int=int		double+double=double	
+
+Asignaciones -> Type:promotesTo(Type)
+
+como se	infiere y comprueba el tipo de casts -> canBeCastTo(Type):Type	
+	(Double) 'a' se puede hacer
+	(Char) 45.3 se puede hacer	(Char) 1245.3 se puede hacer pero dara error por ser muy grande (?)
+
+como se infiere y comprueba el tipo de invocaciones a funcion -> parenthesis(List<Type>):Type
+F(4) -> tres tipos, parametroS 4 INT, f TIPOFUNCION, lo que devuelve f EXP2.TYPE.METODO...
+	(x) InvFunc: exp1 -> ex2 exp3*
+	R(x) exp1.type = exp2.type.parenthesis(exp3*.stream.map(exp -> exp.type).toList)
+
+UnaryMinus
+-a -> dos tipos, a lo infiere de expression, y el de -a -> lo que devuelve metodo Arithmetic() o Minus()...
+	int devuelve int, double devuelve double, pero CHAR DEVUELVE INT (en 254 bits no se pueden guardar numeros negativos)
+	
+Logical -> metodo Type:Logic(Type) 
+Logicas con ! -> Type:Logic()	
+
+como se infiere y comprueba el tipo de los accesos a campo -> dot(String):Type
+
+Conditional, Iterative -> if, while -> comprobar que la expresion sea logica
+	visit(IF if)
+		if.exp.type = if.exp.type.asLogical()
+
+como se comprueba que funcion retorna y recibe tipos simples -> BuiltInType():Type
+
+------------------ LAB10 12/04/23 -------------------
+IP - dir instr actual
+SP - dir del tope
+BP - dir del frame de la inst actual
+
+var locales
+BP
+var globales
+
+calcular offset var globales
+1ª var -> 0
+nª var -> sumatorio tamaño anteriores
+...
+
+calcular offset var locales (siempre negativas)
+1ª -> -su tamaño
+nª -> BP-(suma de la anteriores + su tamaño)
+
+calcular offset parametros
+nª -> BP+4+tamaño de las posteriores, los declarados a su derecha (encima en la pila)
+
+calcular offset campos / fields
+1ª -> 0
+nª -> suma de los campos anteriores
+
+- añadir getOffSet y setOffSet:int en VariableDefinition y FieldRecord
+- numberOfBytes():int en Type
+- OffSetVisitor en paquete codegeneration
+
+- Para variable globales, es mejor la segunda opcion, tener una variable global
+- comprobar scope
+- si scope = 1, puede ser parametro o var local, para var locales podemos usar un atributo 
+	del visitor. el padre es el tipo de la función.
+
+
+visit(VarDef vd)
+	int sum;
+	if(vd.scope=0)
+		//global
+	else //vamos a asumir que sea una var local (porque con parametros haremos que NO llegue hasta aqui)
+		vd.offset=sum;
+		sum+=vd.type.numberofbytes
+	// NUNCA LLAMAR A PARAM.VISIT, NO DEBE LLEGAR AQUI
+
+visit(FunctionType ft)
+	it sumparamderecha=0;
+	for(del ultimo al primero)
+		ft.get(i).offset=4+sumaParamDerecha;
+		sum+=ft.get(i).type.numberofbytes;
+
+visit(FunctionDefinition)
+	//poner a 0 sumparam?? o mandarlo como parametro??
+
+------------------ LAB11 19/04/23 ------------------- APUNTES DE HECTOR
+
+Clase CodeGenerator:
+	out:PrintWrite -> escribir instrucciones en ese fichero -> utilizar fichero de salida output.txt
+		-> output.txt sólo hay que ponerle #source ...
+
+instrucciones:
+	out.println("inst")
+	out.flush()
+
+método source que escribe etiqueta #source en fichero de entrada
+método para escribir comentarios
+
+visitor execute necesita los otros dos
+otros 2 visitor se necesitan entre ellos
+todos necesitan MISMO codegenerator
+
+
+Plantillas generación código:
+
+execute[[Program:program -> definition*]]() =
+	for (Definition d: definition*) {
+		if (d instanceof VarDefinition) {
+			execute[[d]]()
+		}
+	}
+	<call main>
+	<halt>
+	for (Definition d: definition*) {
+		if (d instanceof FuncDefinition) {
+			execute[[d]]()
+		}
+	}
+
+execute[[Print:statement -> expression]]() =
+	value[[expression]]()
+	<out> expression.type.suffix()
+
+execute[[Input:statement -> expression]]() =
+	address[[expression]]()
+	<in> expression.type.suffix()
+	<store> expression.type.suffix()
+	
+address[[Variable:expression -> ID]]() =
+	if (expression.definition.scope == 0) {
+	
+	} else {
+	
+	}
+	
+value[[Variable:expression -> ID]]() =
+
+**Poner plantillas en comentario en cada método visit
+	
+
+
+Para probarlo:
+-compilar con mayus f10
+-ejecutar con alt e
+-hacer lo de la segunda foto
+-cambiar teclas: settings keymap externaltools externaltools (alt+d debug, alt+e run)
+
+-> NO HACER AUN: if while functioninvocation return fieldaccess arrayaccess
+
+En FuncDefinition abajo:
+	if tiporeturn == Void
+		ret 0, -offset (de ultima variable), 0
+
+------------------ LAB12 26/04/23 ------------------- 
+Indexing/ArrayAccess en OneNote
+
+FieldAccess/StructAccess en DIAPO. 77 -> type.getField (type es un FieldType, hacer cast)
+
+While en OneNote
+	int condition = cg.getLabel
+	int end = cg.getLabel()
+
+If en DIAPO. 88
+	cg.getLabels(2) -> devuelve un numero pero permite usar label y label+1
+	eso o dos getLabel()
+
+- el do while no lo tengo implementado, no se si hay q hacerlo...
+- en structaccess, creo que lo estoy guardando al reves (solucionao)
+	- en name deberia ser el nombre del struct
+	- en en expression lo que va despues
+	- en type, structtype (estoy guardando tipo de expression!)
+		- en Parser en StructAccess cambie orden de ID ',' expression
+			y ahora falla :(( cuidao
+		- mirar en github e incluso debuggear para ver por donde entra
+			en sa.expression.accept(this,p) del StructAccess
+
+
+------------------ LAB13 03/05/23 ------------------- 
+
+execute[[Invocation]] -> En el campus, repite lo que hay en value, aqui llama a value, dos maneras de hacerlo
+value[[(Expression) statement]]()
+if(!((Expression)statement.type instanceOf VoidType))
+	pop ((Expression) statement).type.suffix();
+
+execute[[return]]
+ret tamaño de lo q devuelve el return, tamaño variables locales, tamaño parametros
+pasar por parametro de visitor
+en funcion guardar atributo tamaño total parametros
+y guardar tamaño del ultimo
+
+pal examen probar input de clase 11,12,13 + big.input (creo que esta en lab13)
+examenes pasados
+ - operador ternario (condición ? expr1 : expr2)
+ - switch
+	switch (expresión) {
+ 	 case valor1:
+    		//Declaraciones ejecutadas cuando el resultado de expresión coincide con el valor1
+    		[break;]
+  	case valor2:
+    		//Declaraciones ejecutadas cuando el resultado de expresión coincide con el valor2
+    		[break;]	
+  	default:
+    		//Declaraciones ejecutadas cuando ninguno de los valores coincide con el valor de la expresión
+    		[break;]
+	}
+ - + en vez de sumar, multiplicar (solo habria que cambiar en el switch de + codeGeneration el add por mul, creo?) 
+ - añadir boolean
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
