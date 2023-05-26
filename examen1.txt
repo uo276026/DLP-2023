@@ -6,7 +6,7 @@ def main(): {
   real:double;
   integer:int;
 
-  integer='a';
+  integer='a';  #ASCCI('a') = 97
   real=integer;
 
   print real+1,             #muestra 98.0 (en mapl no sale el .0)

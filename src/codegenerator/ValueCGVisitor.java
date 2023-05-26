@@ -1,6 +1,7 @@
 package codegenerator;
 
 import ast.Expression.*;
+import ast.Type.FunctionType;
 
 public class ValueCGVisitor extends AbstractCGVisitor<Object, Void>{
 
@@ -68,7 +69,9 @@ public class ValueCGVisitor extends AbstractCGVisitor<Object, Void>{
     @Override
     public Void visit(Arithmetic a, Object p) {
         a.ex1.accept(this,p);
+        codeGenerator.convert(a.ex1.getType(),a.getType());
         a.ex2.accept(this,p);
+        codeGenerator.convert(a.ex2.getType(),a.getType());
         codeGenerator.operation(a.operator, a.getType());
         return null;
     }
@@ -88,7 +91,9 @@ public class ValueCGVisitor extends AbstractCGVisitor<Object, Void>{
     @Override
     public Void visit(Comparison c, Object p) {
         c.expression1.accept(this,p);
+        codeGenerator.convert(c.expression1.getType(),c.getType());
         c.expression2.accept(this,p);
+        codeGenerator.convert(c.expression2.getType(),c.getType());
         codeGenerator.comparison(c.operator, c.getType());
         return null;
     }
@@ -156,10 +161,14 @@ public class ValueCGVisitor extends AbstractCGVisitor<Object, Void>{
         return null;
     }
 
-    public Void visit(FunctionInvocation fInvocation, Object p){
-        for(Expression exp3: fInvocation.expressions)
-            exp3.accept(this, p);
-        codeGenerator.call(fInvocation.defName.name);
+    public Void visit(FunctionInvocation f, Object p){
+        FunctionType function = (FunctionType) f.defName.def.getType();
+        for(int i=0;i<f.expressions.size();i++){
+            f.expressions.get(i).accept(this,p);
+            codeGenerator.convert(f.expressions.get(i).getType(),function.getParameters().get(i).getType());
+        }
+
+        codeGenerator.call(f.defName.name);
         return null;
     }
 

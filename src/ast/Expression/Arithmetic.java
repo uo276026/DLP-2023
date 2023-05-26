@@ -10,7 +10,6 @@ public class Arithmetic extends AbstractExpression  {
     public Expression ex2;
     public String operator;
 
-
     public Arithmetic(int line, int column, Expression ex1, String operator, Expression ex2) {
         this.line=line;
         this.column=column;

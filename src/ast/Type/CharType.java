@@ -36,9 +36,8 @@ public class CharType extends AbstractType {
         //Si other es char, devolvemos int
         if(other instanceof CharType)
             return new IntType(line, column);
-        if(other instanceof ErrorType | other instanceof IntType)
+        if(other instanceof ErrorType | other instanceof IntType | other instanceof DoubleType)
             return other;
-        //Si es double, debe dar error
         return super.arithmetic(other, line, column);
     }
 
@@ -63,5 +62,32 @@ public class CharType extends AbstractType {
     @Override
     public String suffix(){
         return "b";
+    }
+
+    @Override
+    public Type MustPromoteTo(Type other, int line, int column) {
+        if(other.getClass().equals(this.getClass()) | other instanceof ErrorType |other instanceof IntType | other instanceof DoubleType)
+            return other;
+        return new ErrorType(line, column,
+                "ERROR in line " + line + ": Different types at Assignment");
+    }
+
+    @Override
+    public Type BuiltInType(Type other, int line, int column) {
+        if(this.getClass().equals(other.getClass()) | other instanceof ErrorType)
+            return other;
+        if(other instanceof IntType | other instanceof DoubleType)
+            return this;
+        return new ErrorType(line, column,
+                "ERROR in line " + line + ": Different types at Return");
+    }
+
+    @Override
+    public Type comparison(Type other, int line, int column) {
+        if(other instanceof IntType | other instanceof DoubleType | other instanceof CharType)
+            return new IntType(line, column);
+        if(other instanceof ErrorType)
+            return other;
+        return super.arithmetic(other, line, column);
     }
 }

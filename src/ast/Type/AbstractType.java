@@ -4,6 +4,7 @@ import java.util.List;
 
 public abstract class AbstractType implements Type{
 
+
     @Override
     public String suffix(){
         return "";
@@ -69,7 +70,7 @@ public abstract class AbstractType implements Type{
 
     @Override
     public Type BuiltInType(Type other, int line, int column) {
-        if(this.getClass().equals(other.getClass()))
+        if(this.getClass().equals(other.getClass())| other instanceof ErrorType)
             return other;
         return new ErrorType(line, column,
                 "ERROR in line " + line + ": Different types at Return");

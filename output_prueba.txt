@@ -24,7 +24,6 @@ halt
 	loadi
 	pushi	1
 	addi
-	i2f
 	ret	4, 0, 6
 
 #line	5
@@ -103,16 +102,13 @@ halt
 #line	17
 	' * Write
 	pushb	97
-	b2i
 	pushb	97
-	b2i
 	eqi
 	outi
 
 #line	17
 	' * Write
 	pushb	97
-	b2i
 	push	bp
 	pushi	-6
 	addi
@@ -130,14 +126,12 @@ halt
 	pushi	-4
 	addi
 	loadf
-	f2i
 	lti
 	outi
 
 #line	17
 	' * Write
 	pushb	97
-	b2i
 	push	bp
 	pushi	-4
 	addi
@@ -155,8 +149,6 @@ halt
 	addi
 	loadi
 	pushb	99
-	b2i
-	i2f
 	call	f
-	outf
+	outb
 	ret	0, 6, 0

@@ -28,10 +28,10 @@ public class DoubleType extends AbstractType {
 
     @Override
     public Type arithmetic(Type other, int line, int column){
-        //Si es double o Error, devolvemos other
-        if(other instanceof DoubleType || other instanceof ErrorType)
+        if(other instanceof IntType | other instanceof DoubleType | other instanceof CharType)
+            return new IntType(line, column);
+        if(other instanceof ErrorType)
             return other;
-        //Si es int o char, debe dar error
         return super.arithmetic(other, line, column);
     }
 
@@ -47,11 +47,14 @@ public class DoubleType extends AbstractType {
         return this;
     }
 
+
     @Override
     public Type comparison(Type other, int line, int column) {
-        if(other.getClass().equals(this.getClass()))
+        if(other instanceof IntType | other instanceof DoubleType | other instanceof CharType)
             return new IntType(line, column);
-        return super.comparison(this, line, column);
+        if(other instanceof ErrorType)
+            return other;
+        return super.arithmetic(other, line, column);
     }
 
     @Override

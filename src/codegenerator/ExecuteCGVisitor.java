@@ -127,6 +127,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Object, Void>{
         codeGenerator.printTitle("Assignment");
         a.expression1.accept(addressCGVisitor, p);
         a.expression2.accept(valueCGVisitor, p);
+        codeGenerator.convert(a.expression2.getType(), a.expression1.getType());
         codeGenerator.store(a.expression1.getType());
         return null;
     }
@@ -247,7 +248,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Object, Void>{
 
         FunctionType funcType= (FunctionType) f.getType();
         Type returnType= funcType.getReturnType();
-
+        codeGenerator.convert(r.expression.getType(), returnType);
         //Si es VoidType, no llega hasta aqui porque no tiene statement Return, lo hace en FunctionDefinition
 //        if (returnType instanceof VoidType)
 //            codeGenerator.ret(0, f.getLocalBytes(), 0);

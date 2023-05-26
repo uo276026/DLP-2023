@@ -59,8 +59,17 @@ public class FunctionType extends AbstractType {
                     "The number of parameters is wrong");
         for(int i=0;i<other.size();i++){
             if(!other.get(i).getClass().equals(getParameters().get(i).getType().getClass())) {
-                if(other.get(i) instanceof ErrorType)
+                Type paramType=getParameters().get(i).getType();
+                if(other.get(i) instanceof ErrorType) {
                     return other.get(i);
+                }
+
+                if((other.get(i) instanceof CharType && paramType instanceof DoubleType)
+                        || (other.get(i) instanceof CharType && paramType instanceof IntType)
+                            || (other.get(i) instanceof IntType && paramType instanceof DoubleType)){
+                    return this.returnType;
+                }
+
                 return new ErrorType(line, column, "ERROR in line " + line +
                         ": The type of the parameter is not the same in the definition of '" + parameters.get(i).getName() + "'");
             }

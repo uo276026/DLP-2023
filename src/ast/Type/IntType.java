@@ -40,10 +40,10 @@ public class IntType extends AbstractType {
 
     @Override
     public Type arithmetic(Type other, int line, int column){
-        //Si es Int o Error, devolvemos other
-        if(other instanceof IntType || other instanceof ErrorType)
+        if(other instanceof IntType | other instanceof CharType)
+            return this;
+        if(other instanceof ErrorType | other instanceof DoubleType)
             return other;
-        //Si es double o char, debe dar error
         return super.arithmetic(other, line, column);
     }
 
@@ -66,9 +66,11 @@ public class IntType extends AbstractType {
 
     @Override
     public Type comparison(Type other, int line, int column) {
-        if(other.getClass().equals(this.getClass()))
-            return new IntType(line, column);
-        return super.comparison(this, line, column);
+        if(other instanceof IntType | other instanceof DoubleType | other instanceof CharType)
+            return this;
+        if(other instanceof ErrorType)
+            return other;
+        return super.arithmetic(other, line, column);
     }
 
     @Override
@@ -91,5 +93,22 @@ public class IntType extends AbstractType {
         return "i";
     }
 
+    @Override
+    public Type MustPromoteTo(Type other, int line, int column) {
+        if(other.getClass().equals(this.getClass()) | other instanceof ErrorType |other instanceof DoubleType)
+            return other;
+        return new ErrorType(line, column,
+                "ERROR in line " + line + ": Different types at Assignment");
+    }
+
+    @Override
+    public Type BuiltInType(Type other, int line, int column) {
+        if(this.getClass().equals(other.getClass()) | other instanceof ErrorType)
+            return other;
+        if(other instanceof DoubleType)
+            return this;
+        return new ErrorType(line, column,
+                "ERROR in line " + line + ": Different types at Return");
+    }
 
 }
